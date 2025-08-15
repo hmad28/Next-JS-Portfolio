@@ -676,7 +676,7 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute z-1 top-10/7 left-3/4 md:left-5/7 2xl:left-2/3 -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800"
+            className="absolute z-1 top-9/7 md:top-10/7 left-3/4 md:left-5/7 2xl:left-2/3 -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800"
             style={{
               transform: `translate(-0%, 80%) translateY(${offsetY * -0.2}px)`,
               transition: "transform 1.2s linear",
@@ -693,7 +693,7 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute z-1 top-12/8 md:top-10/8 left-3/5 drop-shadow-xl drop-shadow-zinc-800"
+            className="absolute z-1 top-11/8 md:top-10/8 left-3/5 drop-shadow-xl drop-shadow-zinc-800"
             style={{
               transform: `translate(-50%, 30%) translateY(${offsetY * -0.2}px)`,
               transition: "transform 1.5s linear",
@@ -710,7 +710,7 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute z-1 top-7/8 md:top-11/8 left-3/4 md:left-5/6 2xl:left-3/4 drop-shadow-xl drop-shadow-zinc-800"
+            className="absolute z-1 top-7/8 md:top-11/8 left-4/5 md:left-5/6 2xl:left-3/4 drop-shadow-xl drop-shadow-zinc-800"
             style={{
               transform: `translate(-50%, -110%) translateY(${
                 offsetY * -0.1
