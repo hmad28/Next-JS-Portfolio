@@ -126,11 +126,11 @@ export default function Portfolio() {
     ];
   return (
     <div>
-      <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+      <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5">
         {portfolioItems.map((item) => (
           <div
             key={item.image}
-            className="group relative block bg-black md:h-[650px] overflow-hidden"
+            className="group relative block bg-black 2xl:h-[650px] overflow-hidden"
           >
             <Image
               src={`/images/${item.image}`}
@@ -147,24 +147,24 @@ export default function Portfolio() {
                 {item.category}
               </p>
 
-              <p className="text-xl font-bold text-white sm:text-2xl">
+              <p className="text-xl font-bold text-white 2xl:text-2xl">
                 {item.title}
               </p>
 
-              <div className="mt-32 sm:mt-48">
+              <div className="mt-32 2xl:mt-48">
                 <div className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100 flex flex-col items-start gap-3">
                   <div className="w-full flex gap-2 flex-wrap">
                     {item.tools.map((tool) => (
                       <div
                         key={tool.name}
-                        className={`px-2 font-mono text-sm rounded ${tool.bg} ${tool.text}`}
+                        className={`px-2 font-mono text-sm md:text-xs 2xl:text-sm rounded ${tool.bg} ${tool.text}`}
                       >
                         {tool.name}
                       </div>
                     ))}
                   </div>
 
-                  <h1 className="text-3xl text-white font-bold">
+                  <h1 className="text-2xl 2xl:text-3xl text-white font-bold">
                     {item.client}
                   </h1>
                   <p className="text-sm text-white">{item.description}</p>

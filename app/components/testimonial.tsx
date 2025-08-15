@@ -65,7 +65,7 @@ export default function Testimonials() {
           <header className="chat-header text-base flex items-center gap-2">
             <a
               href={t.linkedin}
-              className="hover:underline text-xs md:text-base"
+              className="hover:underline text-xs md:text-[11px] 2xl:text-base"
               target="_blank"
               rel="noopener noreferrer"
               itemProp="author"
@@ -73,11 +73,11 @@ export default function Testimonials() {
               {t.name}
             </a>
             |{" "}
-            <time className="text-[10px] md:ext-xs opacity-50" itemProp="datePublished">
+            <time className="text-[10px] md:text-[9px] 2xl:text-xs opacity-50" itemProp="datePublished">
               {t.role}
             </time>
           </header>
-          <p className="chat-bubble max-w-md text-sm md:text-base" itemProp="reviewBody">
+          <p className="chat-bubble max-w-md text-sm md:text-[11px] 2xl:text-base" itemProp="reviewBody">
             {t.message}
           </p>
           <footer className="chat-footer opacity-50">Delivered</footer>

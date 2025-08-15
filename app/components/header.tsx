@@ -87,23 +87,35 @@ export default function Header() {
       className="w-full fixed top-0 z-50 p-5 transition-colors duration-300 drop-shadow-xl"
     >
       <div className="w-full px-4 py-2 flex justify-between items-center tracking-wider">
-        <div className="text-3xl md:text-5xl font-bold uppercase">Hammad.</div>
+        <div className="text-3xl lg:text-4xl 2xl:text-6xl font-bold uppercase">
+          Hammad.
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:block">
-          <ul className="flex gap-8 py-2">
-            <li className="hover:font-semibold w-20 text-center">Home</li>
-            <li className="hover:font-semibold w-20 text-center">About</li>
-            <li className="hover:font-semibold w-20 text-center">Projects</li>
-            <li className="hover:font-semibold w-20 text-center">Skills</li>
-            <li className="hover:font-semibold w-20 text-center">Contact</li>
+          <ul className="flex gap-8 py-2 text-sm 2xl:text-base">
+            <li className="hover:font-semibold w-20 text-center">
+              <a href="#hero">Home</a>
+            </li>
+            <li className="hover:font-semibold w-20 text-center">
+              <a href="#portfolio">Projects</a>
+            </li>
+            <li className="hover:font-semibold w-20 text-center">
+              <a href="#skill">Skills</a>
+            </li>
+            <li className="hover:font-semibold w-20 text-center">
+              <a href="#about">About</a>
+            </li>
+            <li className="hover:font-semibold w-20 text-center">
+              <a href="#">Contact</a>
+            </li>
           </ul>
         </nav>
 
         {/* Desktop Hire Button */}
         <button
           id="hireButton"
-          className="hidden md:block px-4 py-2 bg-black text-white rounded hover:scale-105 duration-200 hover:shadow-lg cursor-pointer font-semibold"
+          className="hidden md:block px-4 py-2 text-sm 2xl:text-base bg-black text-white rounded hover:scale-105 duration-200 hover:shadow-lg cursor-pointer font-semibold"
         >
           Hire!
         </button>
@@ -124,14 +136,14 @@ export default function Header() {
           <a href="#home" onClick={() => setMenuOpen(false)}>
             Home
           </a>
-          <a href="#about" onClick={() => setMenuOpen(false)}>
-            About
-          </a>
           <a href="#projects" onClick={() => setMenuOpen(false)}>
             Projects
           </a>
           <a href="#skills" onClick={() => setMenuOpen(false)}>
             Skills
+          </a>
+          <a href="#about" onClick={() => setMenuOpen(false)}>
+            About
           </a>
           <a href="#contact" onClick={() => setMenuOpen(false)}>
             Contact

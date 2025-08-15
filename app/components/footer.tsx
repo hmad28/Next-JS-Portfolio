@@ -20,7 +20,7 @@ export default function Footer() {
             </div>
 
             <p className="mt-4 max-w-xs text-gray-500 dark:text-gray-400">
-              <p>
+              <p className='text-sm 2xl:text-base'>
                 Hi, I&apos;m Hammad (aka Matt, Muhammad). Web fullstack
                 developer, video editor, graphic designer, and lifelong student.
               </p>
@@ -176,7 +176,7 @@ export default function Footer() {
               <ul className="mt-6 space-y-4 text-sm">
                 <li>
                   <a
-                    href="#"
+                    href="#hero"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
                     Home
@@ -185,7 +185,7 @@ export default function Footer() {
 
                 <li>
                   <a
-                    href="#"
+                    href="#portfolio"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
                     My Works
@@ -194,19 +194,19 @@ export default function Footer() {
 
                 <li>
                   <a
-                    href="#"
+                    href="#skill"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    About Me
+                    Skills
                   </a>
                 </li>
 
                 <li>
                   <a
-                    href="#"
+                    href="#about"
                     className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
                   >
-                    Skills
+                    About Me
                   </a>
                 </li>
 
