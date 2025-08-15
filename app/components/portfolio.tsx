@@ -126,11 +126,11 @@ export default function Portfolio() {
     ];
   return (
     <div>
-      <section className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
         {portfolioItems.map((item) => (
           <div
             key={item.image}
-            className="group relative block bg-black h-[650px] overflow-hidden"
+            className="group relative block bg-black md:h-[650px] overflow-hidden"
           >
             <Image
               src={`/images/${item.image}`}

@@ -38,7 +38,7 @@ const testimonials = [
 export default function Testimonials() {
   return (
     <section
-      className="flex flex-col md:flex-row gap-10 justify-center"
+      className="flex flex-col md:flex-row flex-wrap xl:flex-nowrap gap-5 md:gap-10 justify-start md:justify-center"
       aria-label="Testimonials from work partners and students"
     >
       {testimonials.map((t, idx) => (
@@ -65,7 +65,7 @@ export default function Testimonials() {
           <header className="chat-header text-base flex items-center gap-2">
             <a
               href={t.linkedin}
-              className="hover:underline"
+              className="hover:underline text-xs md:text-base"
               target="_blank"
               rel="noopener noreferrer"
               itemProp="author"
@@ -73,11 +73,11 @@ export default function Testimonials() {
               {t.name}
             </a>
             |{" "}
-            <time className="text-xs opacity-50" itemProp="datePublished">
+            <time className="text-[10px] md:ext-xs opacity-50" itemProp="datePublished">
               {t.role}
             </time>
           </header>
-          <p className="chat-bubble max-w-md" itemProp="reviewBody">
+          <p className="chat-bubble max-w-md text-sm md:text-base" itemProp="reviewBody">
             {t.message}
           </p>
           <footer className="chat-footer opacity-50">Delivered</footer>

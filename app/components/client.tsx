@@ -28,7 +28,7 @@ export default function Client() {
     <div className="w-full overflow-hidden inline-flex [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
       <ul
         ref={ulRef}
-        className="flex items-center [&_li]:mx-8"
+        className="hidden md:flex items-center [&_li]:mx-8"
         style={{ animation: "infiniteScroll 20s linear infinite" }}
       >
         {logos.map((logo, i) => (
@@ -43,6 +43,35 @@ export default function Client() {
               alt={`Logo ${i}`}
               fill
               className="object-contain"
+            />
+          </li>
+        ))}
+      </ul>
+
+      {/* mobile */}
+      <ul
+        ref={ulRef}
+        className="flex md:hidden items-center [&_li]:mx-4"
+        style={{
+          animation: "infiniteScroll 25s linear infinite", // speed lebih lambat di mobile
+        }}
+      >
+        {logos.map((logo, i) => (
+          <li
+            key={i}
+            className="relative flex items-center justify-center"
+            style={{
+              height: `${logo.h * 2.5}px`, // mobile lebih kecil
+              width: `${logo.w * 2.5}px`,
+            }}
+          >
+            <Image
+              loading="lazy"
+              src={logo.src}
+              alt={`Logo ${i}`}
+              fill
+              className="object-contain"
+              sizes="(max-width: 640px) 60px, 120px" // optimasi untuk mobile
             />
           </li>
         ))}

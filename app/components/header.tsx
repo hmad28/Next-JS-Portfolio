@@ -1,13 +1,16 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react"; // untuk ikon hamburger & close
 
 export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     const textOverlay = document.getElementById("textOverlay");
     const hireButton = document.getElementById("hireButton");
     let lastIsLight: boolean | null = null;
 
-    function getBrightness(rgb:string) {
+    function getBrightness(rgb: string) {
       const match = rgb.match(/\d+/g)?.map(Number) || [255, 255, 255];
       const [r, g, b] = match;
       return (r + g + b) / 3;
@@ -51,14 +54,12 @@ export default function Header() {
         lastIsLight = isLight;
 
         if (isLight) {
-          // Background terang → text gelap
           textOverlay?.classList.remove("text-white");
           textOverlay?.classList.add("text-black");
 
           hireButton?.classList.remove("bg-white", "text-black");
           hireButton?.classList.add("bg-black", "text-white");
         } else {
-          // Background gelap → text terang
           textOverlay?.classList.remove("text-black");
           textOverlay?.classList.add("text-white");
 
@@ -68,7 +69,6 @@ export default function Header() {
       }
     }
 
-    // Cek tiap frame biar smooth
     function loop() {
       updateTextColor();
       requestAnimationFrame(loop);
@@ -87,8 +87,10 @@ export default function Header() {
       className="w-full fixed top-0 z-50 p-5 transition-colors duration-300 drop-shadow-xl"
     >
       <div className="w-full px-4 py-2 flex justify-between items-center tracking-wider">
-        <div className="text-5xl font-bold uppercase">Hammad.</div>
-        <nav>
+        <div className="text-3xl md:text-5xl font-bold uppercase">Hammad.</div>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:block">
           <ul className="flex gap-8 py-2">
             <li className="hover:font-semibold w-20 text-center">Home</li>
             <li className="hover:font-semibold w-20 text-center">About</li>
@@ -97,13 +99,51 @@ export default function Header() {
             <li className="hover:font-semibold w-20 text-center">Contact</li>
           </ul>
         </nav>
+
+        {/* Desktop Hire Button */}
         <button
           id="hireButton"
-          className="px-4 py-2 bg-black text-white rounded hover:scale-105 duration-200 hover:shadow-lg cursor-pointer font-semibold"
+          className="hidden md:block px-4 py-2 bg-black text-white rounded hover:scale-105 duration-200 hover:shadow-lg cursor-pointer font-semibold"
         >
           Hire!
         </button>
+
+        {/* Mobile Hamburger */}
+        <button
+          className="md:hidden"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle Menu"
+        >
+          {menuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-black/70 text-white absolute top-full left-0 w-full flex flex-col items-center gap-6 py-6 text-lg font-medium">
+          <a href="#home" onClick={() => setMenuOpen(false)}>
+            Home
+          </a>
+          <a href="#about" onClick={() => setMenuOpen(false)}>
+            About
+          </a>
+          <a href="#projects" onClick={() => setMenuOpen(false)}>
+            Projects
+          </a>
+          <a href="#skills" onClick={() => setMenuOpen(false)}>
+            Skills
+          </a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>
+            Contact
+          </a>
+          <button
+            id="hireButton"
+            className="px-6 py-2 bg-white text-black rounded hover:scale-105 duration-200"
+          >
+            Hire!
+          </button>
+        </div>
+      )}
     </header>
   );
 }

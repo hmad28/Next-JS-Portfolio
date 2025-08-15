@@ -39,29 +39,45 @@ export default function Home() {
       return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const [videoSrc, setVideoSrc] = useState("/images/logo-hammad-final.mp4");
+
+    useEffect(() => {
+      const handleResize = () => {
+        if (window.innerWidth < 768) {
+          setVideoSrc("/images/logo-hammad-final-mobile.mp4"); // versi mobile
+        } else {
+          setVideoSrc("/images/logo-hammad-final.mp4"); // versi desktop
+        }
+      };
+
+      handleResize(); // cek pas awal load
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
   return (
     <main>
       <section
         id="home"
-        className="flex flex-col items-center justify-center pt-18 lg:pt-0 bg-black"
+        className="flex flex-col items-center justify-center lg:pt-0 bg-black"
       >
         <div className="relative w-full h-screen overflow-hidden flex flex-col">
           <video
             id="bgVideo"
-            src="/images/logo hammad final.mp4"
+            src={videoSrc}
             autoPlay
             muted
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           />
 
-          <div className="text-xs absolute hidden md:block bottom-1 left-2 font-semibold font-mono bg-gradient-to-r from-amber-500 via-red-600 to-yellow-300 bg-clip-text text-transparent">
+          <div className="text-xs absolute hidden md:block bottom-20 md:bottom-1 md:left-2 font-semibold font-mono bg-gradient-to-r from-amber-500 via-red-600 to-yellow-300 bg-clip-text text-transparent">
             Hammad | Junior FullStack Developer
           </div>
 
           <div
-            className="absolute p-1.5 md:p-3 w-[160px] md:w-[350px] rounded-3xl md:rounded-4xl bg-white left-7 shadow-lg -bottom-9 md:left-15 md:bottom-10 transition-transform duration-300 hover:-translate-y-2"
+            className="absolute p-1.5 md:p-3 w-[160px] md:w-[350px] rounded-3xl md:rounded-4xl bg-white bottom-5 left-7 shadow-lg  md:left-15 md:bottom-10 transition-transform duration-300 hover:-translate-y-2"
             data-aos="fade-in"
             data-aos-duration="3000"
             data-aos-anchor-placement="center-center"
@@ -86,7 +102,7 @@ export default function Home() {
                 Hammad
                 <Check style={{ color: "#3897F0" }} />
               </div>
-              <div className="text-xs mb-2 md:mb-5 text-zinc-700">
+              <div className="text-[8px] md:text-xs mb-2 md:mb-5 text-zinc-700">
                 Junior Full Stack Developer | Rumah IT Al-Imam Nafi&apos;
               </div>
               <div className="flex justify-between items-center font-semibold text-zinc-700">
@@ -104,7 +120,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="absolute flex justify-center items-center gap-2 rotate-90 md:top-40 font-bold top-13 -left-11">
+          <div className="absolute flex justify-center items-center gap-2 rotate-90 top-30 md:top-40 font-bold -left-11">
             <div className="text-lg md:text-2xl" style={{ color: "white" }}>
               Home
             </div>
@@ -114,12 +130,12 @@ export default function Home() {
       </section>
 
       <section id="portfolio" className="bg-white py-20 relative">
-        <div className="px-10 mx-auto">
-          <div className="w-full mb-15 px-15 drop-shadow-lg drop-shadow-zinc-400">
-            <h3 className="text-xs font-bold tracking-wider text-gray-600 uppercase">
+        <div className="px-4 md:px-10 mx-auto">
+          <div className="w-full mb-8 md:mb-15 md:px-15 drop-shadow-lg drop-shadow-zinc-400">
+            <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-600 uppercase">
               My Works
             </h3>
-            <h1 className="text-8xl font-extrabold">Projects</h1>
+            <h1 className="text-5xl md:text-8xl font-extrabold">Projects</h1>
           </div>
           <div className="w-full flex flex-col gap-8">
             {/* <div className="w-full flex gap-5">
@@ -369,7 +385,7 @@ export default function Home() {
             <Portfolio />
           </div>
         </div>
-        <div className="absolute flex justify-center items-center gap-2 rotate-90 md:top-40 font-bold top-13 -left-15">
+        <div className="absolute flex justify-center items-center gap-2 rotate-90 md:top-40 font-bold top-15 -left-14">
           <div className="text-lg md:text-2xl">Portfolio</div>
           <div className="w-[50px] h-[2px] bg-amber-500"></div>
         </div>
@@ -377,66 +393,66 @@ export default function Home() {
 
       <section
         id="skill"
-        className="relative py-20 bg-[url('/images/city-night.jpeg')] bg-cover bg-center"
+        className="relative py-20 bg-[url('/images/city-night.jpeg')] bg-cover bg-center overflow-hidden"
       >
         <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
         <div className="container mx-auto relative z-10">
-          <div className="w-full mb-15 px-15 drop-shadow-lg drop-shadow-zinc-800">
-            <h3 className="text-xs font-bold tracking-wider text-gray-300 uppercase">
+          <div className="w-full mb-8 md:mb-15 px-4 md:px-15 drop-shadow-lg drop-shadow-zinc-800">
+            <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-300 uppercase">
               list of my skills
             </h3>
-            <h1 className="text-8xl font-extrabold text-white">
+            <h1 className="text-5xl md:text-8xl font-extrabold text-white">
               Programming Skills
             </h1>
           </div>
           <div className="w-full flex flex-col gap-3 text-white">
-            <div className="w-full flex gap-2 justify-center">
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+            <div className="w-full flex gap-2 justify-center flex-wrap">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 HTML
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 CSS
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Bootstrap
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Tailwind
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Javascript
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 PHP
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Laravel
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Next JS
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Node JS
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 MySQL
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Alpine JS
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Python
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 TypeScript
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 React JS
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Github
               </div>
-              <div className="px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
+              <div className="text-sm md:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
                 Figma
               </div>
             </div>
@@ -449,18 +465,20 @@ export default function Home() {
       </section>
 
       <section id="client" className="bg-white py-20 relative">
-        <div className="w-full mb-15 px-15 drop-shadow-lg drop-shadow-zinc-400">
-          <h3 className="text-xs font-bold tracking-wider text-gray-600 uppercase">
+        <div className="w-full mb-8 md:mb-15 px-4 md:px-15 drop-shadow-lg drop-shadow-zinc-400">
+          <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-600 uppercase">
             Companies I Have Worked With
           </h3>
-          <h1 className="text-8xl font-extrabold text-black">Clients</h1>
+          <h1 className="text-5xl md:text-8xl font-extrabold text-black">
+            Clients
+          </h1>
         </div>
         <Client />
       </section>
 
       <section id="about" className="bg-black relative">
-        <div className="w-full flex relative">
-          <div className="w-1/2 relative h-[900px]">
+        <div className="w-full flex flex-col md:flex-row relative">
+          <div className="w-full md:w-1/2 relative h-[700px] md:h-[900px]">
             <Image
               loading="lazy"
               src="/images/about1.jpg"
@@ -468,16 +486,16 @@ export default function Home() {
               fill
               className="object-cover object-top"
             />
-            <div className="absolute bg-black/40 py-10 px-15 w-full h-full">
-              <h3 className="text-xs font-bold tracking-wider text-gray-300 uppercase drop-shadow-lg drop-shadow-zinc-600">
+            <div className="absolute bg-black/40 py-10 px-4 md:px-15 w-full h-full">
+              <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-300 uppercase drop-shadow-lg drop-shadow-zinc-600">
                 Introduction
               </h3>
-              <h1 className="text-8xl font-extrabold text-white drop-shadow-lg drop-shadow-zinc-600">
+              <h1 className="text-5xl md:text-8xl font-extrabold text-white drop-shadow-lg drop-shadow-zinc-600">
                 About Me
               </h1>
             </div>
           </div>
-          <div className="w-1/2 px-15 py-5">
+          <div className="w-full md:w-1/2 px-4 md:px-15 py-5">
             <div className="w-full">
               <TextNeon />
             </div>
@@ -487,11 +505,11 @@ export default function Home() {
               </p>
               <h1 className="text-3xl text-white">
                 My name is{" "}
-                <span className="text-6xl uppercase font-extrabold tracking-tight">
+                <span className="text-3xl md:text-6xl uppercase font-extrabold tracking-tight">
                   Hammad.
                 </span>
               </h1>
-              <p className="text-xl text-white mt-3 max-w-2xl">
+              <p className="text-md md:text-xl text-white mt-3 max-w-2xl">
                 I&apos;m a passionate student in{" "}
                 <span className="font-extrabold text-red-500">learning IT</span>
                 . In the future, I wanna become a{" "}
@@ -511,7 +529,7 @@ export default function Home() {
             </div>
           </div>
           <div
-            className="absolute z-1 top-6/6 left-1/2 drop-shadow-xl drop-shadow-zinc-800"
+            className="absolute z-1 top-5/6 md:top-6/6 left-1/2 drop-shadow-xl drop-shadow-zinc-800"
             style={{
               transform: `translate(-50%, -50%) translateY(${
                 offsetY * -0.08
@@ -530,7 +548,7 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute z-1 top-10/7 left-2/3 -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800"
+            className="absolute z-1 top-10/7 left-3/4 md:left-2/3 -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800"
             style={{
               transform: `translate(-0%, 80%) translateY(${offsetY * -0.2}px)`,
               transition: "transform 1.2s linear",
@@ -547,7 +565,7 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute z-1 top-10/8 left-3/5 drop-shadow-xl drop-shadow-zinc-800"
+            className="absolute z-1 top-12/8 md:top-10/8 left-3/5 drop-shadow-xl drop-shadow-zinc-800"
             style={{
               transform: `translate(-50%, 30%) translateY(${offsetY * -0.2}px)`,
               transition: "transform 1.5s linear",
@@ -564,7 +582,7 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute z-1 top-11/8 left-3/4 drop-shadow-xl drop-shadow-zinc-800"
+            className="absolute z-1 top-7/8 md:top-11/8 left-3/4 drop-shadow-xl drop-shadow-zinc-800"
             style={{
               transform: `translate(-50%, -110%) translateY(${
                 offsetY * -0.1
@@ -583,7 +601,7 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute z-1 top-[125%] left-[85%] -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800"
+            className="absolute z-1 top-[120%] md:top-[125%] left-[90%] md:left-[85%] -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800"
             style={{
               transform: `translate(-50%, -50%) translateY(${
                 offsetY * -0.15
@@ -605,13 +623,13 @@ export default function Home() {
       </section>
 
       <section id="testimonial" className="bg-white py-20 relative">
-        <div className="w-full mb-15 px-15 drop-shadow-lg drop-shadow-zinc-400">
-          <h3 className="text-xs font-bold tracking-wider text-gray-600 uppercase">
+        <div className="w-full mb-8 md:mb-15 px-4 md:px-15 drop-shadow-lg drop-shadow-zinc-400">
+          <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-600 uppercase">
             What people say about me
           </h3>
-          <h1 className="text-8xl font-extrabold text-black">Testimonials</h1>
+          <h1 className="text-5xl md:text-8xl font-extrabold text-black">Testimonials</h1>
         </div>
-        <div className="w-full px-15">
+        <div className="w-full px-4 md:px-15">
           <Testimonial />
         </div>
       </section>
