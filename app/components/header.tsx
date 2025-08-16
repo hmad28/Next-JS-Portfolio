@@ -5,88 +5,88 @@ import { Menu, X } from "lucide-react"; // untuk ikon hamburger & close
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const textOverlay = document.getElementById("textOverlay");
-    const hireButton = document.getElementById("hireButton");
-    let lastIsLight: boolean | null = null;
+  // useEffect(() => {
+  //   const textOverlay = document.getElementById("textOverlay");
+  //   const hireButton = document.getElementById("hireButton");
+  //   let lastIsLight: boolean | null = null;
 
-    function getBrightness(rgb: string) {
-      const match = rgb.match(/\d+/g)?.map(Number) || [255, 255, 255];
-      const [r, g, b] = match;
-      return (r + g + b) / 3;
-    }
+  //   function getBrightness(rgb: string) {
+  //     const match = rgb.match(/\d+/g)?.map(Number) || [255, 255, 255];
+  //     const [r, g, b] = match;
+  //     return (r + g + b) / 3;
+  //   }
 
-    function getSolidBgColor(el: Element | null) {
-      let current = el;
-      while (current) {
-        const bg = window.getComputedStyle(current).backgroundColor;
-        if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") {
-          return bg;
-        }
-        current = current.parentElement;
-      }
-      return "rgb(255,255,255)";
-    }
+  //   function getSolidBgColor(el: Element | null) {
+  //     let current = el;
+  //     while (current) {
+  //       const bg = window.getComputedStyle(current).backgroundColor;
+  //       if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") {
+  //         return bg;
+  //       }
+  //       current = current.parentElement;
+  //     }
+  //     return "rgb(255,255,255)";
+  //   }
 
-    function getBgColorUnderHeader() {
-      let y = 40;
-      let el;
-      do {
-        el = document.elementFromPoint(window.innerWidth / 2, y);
-        y += 10;
-      } while (
-        el &&
-        (el.id === "textOverlay" ||
-          (textOverlay && textOverlay.contains(el))) &&
-        y < window.innerHeight
-      );
+  //   function getBgColorUnderHeader() {
+  //     let y = 40;
+  //     let el;
+  //     do {
+  //       el = document.elementFromPoint(window.innerWidth / 2, y);
+  //       y += 10;
+  //     } while (
+  //       el &&
+  //       (el.id === "textOverlay" ||
+  //         (textOverlay && textOverlay.contains(el))) &&
+  //       y < window.innerHeight
+  //     );
 
-      if (!el) return "rgb(255,255,255)";
-      return getSolidBgColor(el);
-    }
+  //     if (!el) return "rgb(255,255,255)";
+  //     return getSolidBgColor(el);
+  //   }
 
-    function updateTextColor() {
-      const bgColor = getBgColorUnderHeader();
-      const brightness = getBrightness(bgColor);
-      const isLight = brightness >= 127;
+  //   function updateTextColor() {
+  //     const bgColor = getBgColorUnderHeader();
+  //     const brightness = getBrightness(bgColor);
+  //     const isLight = brightness >= 127;
 
-      if (isLight !== lastIsLight) {
-        lastIsLight = isLight;
+  //     if (isLight !== lastIsLight) {
+  //       lastIsLight = isLight;
 
-        if (isLight) {
-          textOverlay?.classList.remove("text-white");
-          textOverlay?.classList.add("text-black");
+  //       if (isLight) {
+  //         textOverlay?.classList.remove("text-white");
+  //         textOverlay?.classList.add("text-black");
 
-          hireButton?.classList.remove("bg-white", "text-black");
-          hireButton?.classList.add("bg-black", "text-white");
-        } else {
-          textOverlay?.classList.remove("text-black");
-          textOverlay?.classList.add("text-white");
+  //         hireButton?.classList.remove("bg-white", "text-black");
+  //         hireButton?.classList.add("bg-black", "text-white");
+  //       } else {
+  //         textOverlay?.classList.remove("text-black");
+  //         textOverlay?.classList.add("text-white");
 
-          hireButton?.classList.remove("bg-black", "text-white");
-          hireButton?.classList.add("bg-white", "text-black");
-        }
-      }
-    }
+  //         hireButton?.classList.remove("bg-black", "text-white");
+  //         hireButton?.classList.add("bg-white", "text-black");
+  //       }
+  //     }
+  //   }
 
-    function loop() {
-      updateTextColor();
-      requestAnimationFrame(loop);
-    }
+  //   function loop() {
+  //     updateTextColor();
+  //     requestAnimationFrame(loop);
+  //   }
 
-    loop();
+  //   loop();
 
-    return () => {
-      lastIsLight = null;
-    };
-  }, []);
+  //   return () => {
+  //     lastIsLight = null;
+  //   };
+  // }, []);
 
   return (
     <header
       id="textOverlay"
-      className="w-full fixed top-0 z-50 p-5 transition-colors duration-300 drop-shadow-xl"
+      className="w-full fixed top-0 z-50 p-5 transition-colors duration-300 drop-shadow-xl bg-white/80 border-b backdrop-blur-2xl"
     >
-      <div className="w-full px-4 py-2 flex justify-between items-center tracking-wider">
+      <div className="w-full px-3 py-1 flex justify-between items-center tracking-wider">
         <div className="text-3xl lg:text-4xl 2xl:text-6xl font-bold uppercase">
           Hammad.
         </div>
