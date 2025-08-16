@@ -72,9 +72,9 @@ export default function Home() {
             className="absolute inset-0 w-full h-full object-cover"
           />
 
-          <div className="text-xs absolute hidden md:block bottom-20 md:bottom-1 md:left-2 font-semibold font-mono bg-gradient-to-r from-amber-500 via-red-600 to-yellow-300 bg-clip-text text-transparent">
+          <h1 className="text-xs absolute hidden md:block bottom-20 md:bottom-1 md:left-2 font-semibold font-mono bg-gradient-to-r from-amber-500 via-red-600 to-yellow-300 bg-clip-text text-transparent">
             Hammad | Junior FullStack Developer
-          </div>
+          </h1>
 
           <div
             className="absolute p-1.5 md:p-3 w-[160px] lg:w-[300px] 2xl:w-[350px] rounded-3xl md:rounded-4xl bg-white bottom-5 left-7 shadow-lg  md:left-15 md:bottom-10 transition-transform duration-300 hover:-translate-y-2"
@@ -98,10 +98,10 @@ export default function Home() {
                   "linear-gradient(to top, rgb(255, 255, 255), rgba(255, 255, 255, 0.885), rgba(255, 255, 255, 0.745), rgba(255, 255, 255, 0))",
               }}
             >
-              <div className="text-lg md:text-3xl font-bold flex items-center gap-2">
+              <h1 className="text-lg md:text-3xl font-bold flex items-center gap-2">
                 Hammad
                 <Check style={{ color: "#3897F0" }} />
-              </div>
+              </h1>
               <div className="text-[8px] md:text-xs mb-2 md:mb-5 text-zinc-700">
                 Junior Full Stack Developer | Rumah IT Al-Imam Nafi&apos;
               </div>

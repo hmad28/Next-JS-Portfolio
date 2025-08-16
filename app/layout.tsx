@@ -21,8 +21,13 @@ export const metadata: Metadata = {
     "Portfolio Hammad (aka Matt, Muhammad, Hammad Imam Nafi), Fullstack Developer, Video Editor, Graphic Designer, and Student. Explore projects, tutorials, and creative works.",
   keywords: [
     "Hammad",
+    "hmd28",
+    "Hammad Matt",
+    "Hammad Muhammad",
     "Matt",
+    "Matt Hammad",
     "Muhammad",
+    "Muhammad Hammad",
     "Hammad Imam Nafi'",
     "Fullstack Developer",
     "Next.js",
