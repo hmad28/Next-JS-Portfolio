@@ -164,9 +164,9 @@ export default function Portfolio() {
                     ))}
                   </div>
 
-                  <h1 className="text-2xl 2xl:text-3xl text-white font-bold">
+                  <h2 className="text-2xl 2xl:text-3xl text-white font-bold">
                     {item.client}
-                  </h1>
+                  </h2>
                   <p className="text-sm text-white">{item.description}</p>
 
                   <div className="w-full flex gap-2 flex-wrap">

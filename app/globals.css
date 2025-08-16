@@ -56,3 +56,31 @@ body {
     animation: flicker 2s ease-in-out infinite alternate;
   }
 }
+
+.color-transiton {
+  width: 100%;
+  background:
+    linear-gradient(to top, rgb(255, 255, 255), rgba(255, 255, 255, 0.885), rgba(255, 255, 255, 0.745), rgba(255, 255, 255, 0));
+}
+
+.check-color {
+  color: #3897F0;
+}
+
+.parallax-box {
+  transform: translate(-50%, -50%) translateY(var(--offsetY, 0px));
+  transition: transform 1s linear;
+  will-change: transform;
+}
+
+.card-two {
+  transform: translate(-0%, 80%) translateY(var(--offsetY2, 0px));
+  transition: transform 1.2s linear;
+  will-change: transform;
+}
+
+.card-three {
+  transform: translate(-50%, -110%) translateY(var(--offsetY3, 0px));
+  transition: transform 1.8s linear;
+  will-change: transform;
+}

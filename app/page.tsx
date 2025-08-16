@@ -90,17 +90,10 @@ export default function Home() {
               height={400}
               className="relative rounded-2xl md:rounded-3xl w-full h-auto"
             />
-            <div
-              className="absolute bottom-0 right-0 rounded-b-4xl p-4 md:px-8 md:py-6"
-              style={{
-                width: "100%",
-                background:
-                  "linear-gradient(to top, rgb(255, 255, 255), rgba(255, 255, 255, 0.885), rgba(255, 255, 255, 0.745), rgba(255, 255, 255, 0))",
-              }}
-            >
+            <div className="absolute bottom-0 right-0 rounded-b-4xl p-4 md:px-8 md:py-6 color-transition">
               <h1 className="text-lg md:text-3xl font-bold flex items-center gap-2">
                 Hammad
-                <Check style={{ color: "#3897F0" }} />
+                <Check className="check-color" />
               </h1>
               <div className="text-[8px] md:text-xs mb-2 md:mb-5 text-zinc-700">
                 Junior Full Stack Developer | Rumah IT Al-Imam Nafi&apos;
@@ -249,9 +242,7 @@ export default function Home() {
           </div>
 
           <div className="absolute flex justify-center items-center gap-2 rotate-90 top-30 md:top-40 font-bold -left-11">
-            <div className="text-lg md:text-2xl" style={{ color: "white" }}>
-              Home
-            </div>
+            <div className="text-lg md:text-2xl text-white">Home</div>
             <div className="w-[50px] h-[2px] bg-amber-500"></div>
           </div>
         </div>
@@ -263,7 +254,7 @@ export default function Home() {
             <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-600 uppercase">
               My Works
             </h3>
-            <h1 className="text-5xl md:text-8xl font-extrabold">Projects</h1>
+            <h2 className="text-5xl md:text-8xl font-extrabold">Projects</h2>
           </div>
           <div className="w-full flex flex-col gap-8">
             {/* <div className="w-full flex gap-5">
@@ -529,9 +520,9 @@ export default function Home() {
             <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-300 uppercase">
               list of my skills
             </h3>
-            <h1 className="text-5xl md:text-8xl font-extrabold text-white">
+            <h2 className="text-5xl md:text-8xl font-extrabold text-white">
               Programming Skills
-            </h1>
+            </h2>
           </div>
           <div className="w-full flex flex-col gap-3 text-white">
             <div className="w-full flex gap-2 justify-center flex-wrap">
@@ -597,9 +588,9 @@ export default function Home() {
           <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-600 uppercase">
             Companies I Have Worked With
           </h3>
-          <h1 className="text-5xl md:text-8xl font-extrabold text-black">
+          <h2 className="text-5xl md:text-8xl font-extrabold text-black">
             Clients
-          </h1>
+          </h2>
         </div>
         <Client />
       </section>
@@ -618,9 +609,9 @@ export default function Home() {
               <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-300 uppercase drop-shadow-lg drop-shadow-zinc-600">
                 Introduction
               </h3>
-              <h1 className="text-5xl md:text-8xl font-extrabold text-white drop-shadow-lg drop-shadow-zinc-600">
+              <h2 className="text-5xl md:text-8xl font-extrabold text-white drop-shadow-lg drop-shadow-zinc-600">
                 About Me
-              </h1>
+              </h2>
             </div>
           </div>
           <div className="w-full md:w-1/2 px-4 md:px-15 py-5">
@@ -657,14 +648,10 @@ export default function Home() {
             </div>
           </div>
           <div
-            className="absolute z-1 top-5/6 md:top-6/6 left-1/2 drop-shadow-xl drop-shadow-zinc-800"
-            style={{
-              transform: `translate(-50%, -50%) translateY(${
-                offsetY * -0.08
-              }px)`,
-              transition: "transform 1s linear",
-              willChange: "transform",
-            }}
+            className="absolute z-1 top-5/6 md:top-6/6 left-1/2 drop-shadow-xl drop-shadow-zinc-800 parallax-box"
+            style={
+              { "--offsetY": `${offsetY * -0.08}px` } as React.CSSProperties
+            }
           >
             <Image
               loading="lazy"
@@ -676,12 +663,10 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute z-1 top-9/7 md:top-10/7 left-3/4 md:left-5/7 2xl:left-2/3 -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800"
-            style={{
-              transform: `translate(-0%, 80%) translateY(${offsetY * -0.2}px)`,
-              transition: "transform 1.2s linear",
-              willChange: "transform",
-            }}
+            className="absolute z-1 top-9/7 md:top-10/7 left-3/4 md:left-5/7 2xl:left-2/3 -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800 card-two"
+            style={
+              { "--offsetY2": `${offsetY * -0.2}px` } as React.CSSProperties
+            }
           >
             <Image
               loading="lazy"
@@ -710,14 +695,10 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute z-1 top-7/8 md:top-11/8 left-4/5 md:left-5/6 2xl:left-3/4 drop-shadow-xl drop-shadow-zinc-800"
-            style={{
-              transform: `translate(-50%, -110%) translateY(${
-                offsetY * -0.1
-              }px)`,
-              transition: "transform 1.8s linear",
-              willChange: "transform",
-            }}
+            className="absolute z-1 top-7/8 md:top-11/8 left-4/5 md:left-5/6 2xl:left-3/4 drop-shadow-xl drop-shadow-zinc-800 card-three"
+            style={
+              { "--offsetY3": `${offsetY * -0.1}px` } as React.CSSProperties
+            }
           >
             <Image
               loading="lazy"
@@ -755,9 +736,9 @@ export default function Home() {
           <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-600 uppercase">
             What people say about me
           </h3>
-          <h1 className="text-5xl md:text-8xl font-extrabold text-black">
+          <h2 className="text-5xl md:text-8xl font-extrabold text-black">
             Testimonials
-          </h1>
+          </h2>
         </div>
         <div className="w-full px-4 md:px-15">
           <Testimonial />
