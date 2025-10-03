@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react"; // untuk ikon hamburger & close
 
@@ -88,7 +89,7 @@ export default function Header() {
     >
       <div className="w-full px-3 py-1 flex justify-between items-center tracking-wider">
         <div className="text-3xl lg:text-4xl 2xl:text-6xl font-bold uppercase">
-          Hammad.
+          <Link href="/">Hammad.</Link>
         </div>
 
         {/* Desktop Navigation */}
