@@ -77,6 +77,7 @@ export default function RootLayout({
           href="/images/logo-hammad-final.mp4"
           type="video/mp4"
         />
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -115,7 +116,10 @@ export default function RootLayout({
             }),
           }}
         />
+        <script src="https://unpkg.com/aos@next/dist/aos.js" async></script>
+        <script>AOS.init();</script>
       </body>
     </html>
   );
 }
+// declare module "*.css";

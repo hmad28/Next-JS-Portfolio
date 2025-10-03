@@ -84,7 +84,7 @@ export default function Header() {
   return (
     <header
       id="textOverlay"
-      className="w-full fixed top-0 z-50 p-5 transition-colors duration-300 drop-shadow-xl bg-white/80 border-b backdrop-blur-2xl"
+      className="w-full fixed top-0 z-50 px-5 py-2 transition-colors duration-300 drop-shadow-xl bg-white/80 border-b backdrop-blur-2xl"
     >
       <div className="w-full px-3 py-1 flex justify-between items-center tracking-wider">
         <div className="text-3xl lg:text-4xl 2xl:text-6xl font-bold uppercase">

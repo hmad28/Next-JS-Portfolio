@@ -78,10 +78,9 @@ export default function Home() {
           </h1>
 
           <div
-            className="absolute p-1.5 md:p-3 w-[160px] lg:w-[300px] 2xl:w-[350px] rounded-3xl md:rounded-4xl bg-white bottom-5 left-7 shadow-lg  md:left-15 md:bottom-10 transition-transform duration-300 hover:-translate-y-2"
-            data-aos="fade-in"
-            data-aos-duration="3000"
-            data-aos-anchor-placement="center-center"
+            className="absolute p-1.5 md:p-2 2xl:p-3 w-[160px] lg:w-[260px] 2xl:w-[350px] rounded-3xl md:rounded-4xl bg-white bottom-5 left-7 shadow-lg  md:left-15 md:bottom-10 transition-transform duration-300 hover:-translate-y-2"
+            data-aos="fade-down"
+            data-aos-duration="1000"
           >
             <Image
               loading="lazy"
@@ -91,16 +90,16 @@ export default function Home() {
               height={400}
               className="relative rounded-2xl md:rounded-3xl w-full h-auto"
             />
-            <div className="absolute bottom-0 right-0 rounded-b-4xl p-4 md:px-8 md:py-6 color-transition">
-              <h1 className="text-lg md:text-3xl font-bold flex items-center gap-2">
+            <div className="absolute bottom-0 right-0 rounded-b-4xl p-4 md:p-5 2xl:px-8 2xl:py-6 color-transition">
+              <h1 className="text-lg md:text-xl 2xl:text-2xl font-bold flex items-center gap-2">
                 Hammad
                 <Check className="check-color" />
               </h1>
-              <div className="text-[8px] md:text-xs mb-2 md:mb-5 text-zinc-700">
-                Junior Full Stack Developer | Rumah IT Al-Imam Nafi&apos;
+              <div className="text-[8px] md:text-xs mb-2 2xl:mb-5 text-zinc-700">
+                Junior Full Stack Developer | Freelancer
               </div>
 
-              <ul className="flex justify-center gap-1 md:gap-5 items-center font-semibold text-zinc-700">
+              <ul className="flex justify-center gap-1 md:gap-3 2xl:gap-5 items-center font-semibold text-zinc-700">
                 <li>
                   <a
                     href="https://web.facebook.com/profile.php?id=61560555868956"
@@ -249,7 +248,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="portfolio" className="bg-white py-8 md:py-20 relative">
+      <section
+        id="portfolio"
+        className="bg-white py-8 md:py-20 relative"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
         <div className="px-4 md:px-10 mx-auto">
           <div className="w-full mb-8 md:mb-15 md:px-15 drop-shadow-lg drop-shadow-zinc-400">
             <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-600 uppercase">
