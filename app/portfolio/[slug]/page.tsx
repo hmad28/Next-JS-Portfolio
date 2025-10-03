@@ -12,9 +12,12 @@ export async function generateStaticParams() {
 export default async function PortfolioDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const portfolio = await getPortfolioBySlug(params.slug);
+  // Await params terlebih dahulu
+  const { slug } = await params;
+
+  const portfolio = await getPortfolioBySlug(slug);
 
   // Jika portfolio tidak ditemukan, tampilkan 404
   if (!portfolio) {
