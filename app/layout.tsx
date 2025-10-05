@@ -117,7 +117,7 @@ export default function RootLayout({
           }}
         />
         <script src="https://unpkg.com/aos@next/dist/aos.js" async></script>
-        <script>AOS.init();</script>
+        {/* <script>AOS.init();</script> */}
       </body>
     </html>
   );
