@@ -79,8 +79,8 @@ export default function Home() {
 
           <div
             className="absolute p-1.5 md:p-2 2xl:p-3 w-[160px] lg:w-[260px] 2xl:w-[350px] rounded-3xl md:rounded-4xl bg-white bottom-5 left-7 shadow-lg  md:left-15 md:bottom-10 transition-transform duration-300 hover:-translate-y-2"
-            data-aos="fade-down"
-            data-aos-duration="1000"
+            // data-aos="fade-down"
+            // data-aos-duration="1000"
           >
             <Image
               loading="lazy"
@@ -251,8 +251,8 @@ export default function Home() {
       <section
         id="portfolio"
         className="bg-white py-8 md:py-20 relative"
-        data-aos="fade-up"
-        data-aos-duration="1000"
+        // data-aos="fade-up"
+        // data-aos-duration="1000"
       >
         <div className="px-4 md:px-10 mx-auto">
           <div className="w-full mb-8 md:mb-15 md:px-15 drop-shadow-lg drop-shadow-zinc-400">
