@@ -19,42 +19,55 @@ export interface Portfolio {
 }
 
 export async function getPortfolios(): Promise<Portfolio[]> {
+  console.log("🔍 Fetching portfolios from:", `${API_URL}/portfolios`);
+
   try {
     const res = await fetch(`${API_URL}/portfolios`, {
-      next: { revalidate: 60 },
+      cache: "no-store", // Force fresh data
       headers: {
         "Content-Type": "application/json",
       },
-      // PENTING: Tambahkan timeout untuk free hosting
-      signal: AbortSignal.timeout(10000), // 10 detik timeout
+      signal: AbortSignal.timeout(10000),
     });
 
+    console.log("📡 Response status:", res.status);
+    console.log(
+      "📡 Response headers:",
+      Object.fromEntries(res.headers.entries())
+    );
+
     if (!res.ok) {
-      console.error("Failed to fetch portfolios:", res.status, res.statusText);
+      const text = await res.text();
+      console.error("❌ API Error:", res.status, text.substring(0, 200));
       return [];
     }
 
-    // CEK apakah response benar-benar JSON
     const contentType = res.headers.get("content-type");
+    console.log("📄 Content-Type:", contentType);
+
     if (!contentType || !contentType.includes("application/json")) {
-      console.error("Response bukan JSON:", contentType);
       const text = await res.text();
-      console.error("Response body:", text.substring(0, 200)); // Log 200 char pertama
+      console.error("❌ Response bukan JSON:", text.substring(0, 200));
       return [];
     }
 
     const data = await res.json();
-    
-    // Validasi data adalah array
+    console.log("✅ Data received:", data);
+    console.log(
+      "📊 Total portfolios:",
+      Array.isArray(data) ? data.length : "Not an array"
+    );
+
     if (!Array.isArray(data)) {
-      console.error("Response bukan array:", typeof data);
+      console.error("❌ Response bukan array:", typeof data);
       return [];
     }
 
     return data;
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Error fetching portfolios:", error.message);
+      console.error("💥 Error fetching portfolios:", error.message);
+      console.error("Stack:", error.stack);
     }
     return [];
   }
@@ -63,30 +76,37 @@ export async function getPortfolios(): Promise<Portfolio[]> {
 export async function getPortfolioBySlug(
   slug: string
 ): Promise<Portfolio | null> {
+  console.log("🔍 Fetching portfolio:", slug);
+
   try {
     const res = await fetch(`${API_URL}/portfolios/${slug}`, {
-      next: { revalidate: 60 },
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
       signal: AbortSignal.timeout(10000),
     });
 
+    console.log("📡 Response status:", res.status);
+
     if (!res.ok) {
-      console.error("Failed to fetch portfolio:", res.status, res.statusText);
+      const text = await res.text();
+      console.error("❌ API Error:", res.status, text.substring(0, 200));
       return null;
     }
 
     const contentType = res.headers.get("content-type");
     if (!contentType || !contentType.includes("application/json")) {
-      console.error("Response bukan JSON:", contentType);
+      console.error("❌ Response bukan JSON");
       return null;
     }
 
-    return res.json();
+    const data = await res.json();
+    console.log("✅ Portfolio data:", data);
+    return data;
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Error fetching portfolio:", error.message);
+      console.error("💥 Error fetching portfolio:", error.message);
     }
     return null;
   }

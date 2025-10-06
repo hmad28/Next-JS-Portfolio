@@ -2,8 +2,15 @@ import { getPortfolios } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
 
+// Force dynamic - important!
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function PortfolioPage() {
   const portfolios = await getPortfolios();
+
+  // Log untuk debug di Vercel
+  console.log("Portfolio count:", portfolios?.length || 0);
 
   if (!portfolios || portfolios.length === 0) {
     return (
@@ -36,6 +43,7 @@ export default async function PortfolioPage() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    unoptimized // Tambahkan ini karena external image
                   />
                 </div>
               ) : (
