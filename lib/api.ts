@@ -1,6 +1,5 @@
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://portfolio-hmd-backend.free.nf/api";
+// Gunakan proxy API route di Vercel, bukan direct ke backend
+const API_URL = "/api";
 
 export interface Portfolio {
   id: number;
@@ -19,56 +18,29 @@ export interface Portfolio {
 }
 
 export async function getPortfolios(): Promise<Portfolio[]> {
-  console.log("🔍 Fetching portfolios from:", `${API_URL}/portfolios`);
-
   try {
     const res = await fetch(`${API_URL}/portfolios`, {
-      cache: "no-store", // Force fresh data
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
-      signal: AbortSignal.timeout(10000),
     });
 
-    console.log("📡 Response status:", res.status);
-    console.log(
-      "📡 Response headers:",
-      Object.fromEntries(res.headers.entries())
-    );
-
     if (!res.ok) {
-      const text = await res.text();
-      console.error("❌ API Error:", res.status, text.substring(0, 200));
-      return [];
-    }
-
-    const contentType = res.headers.get("content-type");
-    console.log("📄 Content-Type:", contentType);
-
-    if (!contentType || !contentType.includes("application/json")) {
-      const text = await res.text();
-      console.error("❌ Response bukan JSON:", text.substring(0, 200));
+      console.error("Failed to fetch portfolios:", res.status);
       return [];
     }
 
     const data = await res.json();
-    console.log("✅ Data received:", data);
-    console.log(
-      "📊 Total portfolios:",
-      Array.isArray(data) ? data.length : "Not an array"
-    );
 
     if (!Array.isArray(data)) {
-      console.error("❌ Response bukan array:", typeof data);
+      console.error("Response bukan array");
       return [];
     }
 
     return data;
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("💥 Error fetching portfolios:", error.message);
-      console.error("Stack:", error.stack);
-    }
+    console.error("Error fetching portfolios:", error);
     return [];
   }
 }
@@ -76,38 +48,22 @@ export async function getPortfolios(): Promise<Portfolio[]> {
 export async function getPortfolioBySlug(
   slug: string
 ): Promise<Portfolio | null> {
-  console.log("🔍 Fetching portfolio:", slug);
-
   try {
     const res = await fetch(`${API_URL}/portfolios/${slug}`, {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
-      signal: AbortSignal.timeout(10000),
     });
 
-    console.log("📡 Response status:", res.status);
-
     if (!res.ok) {
-      const text = await res.text();
-      console.error("❌ API Error:", res.status, text.substring(0, 200));
+      console.error("Failed to fetch portfolio:", res.status);
       return null;
     }
 
-    const contentType = res.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
-      console.error("❌ Response bukan JSON");
-      return null;
-    }
-
-    const data = await res.json();
-    console.log("✅ Portfolio data:", data);
-    return data;
+    return res.json();
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("💥 Error fetching portfolio:", error.message);
-    }
+    console.error("Error fetching portfolio:", error);
     return null;
   }
 }

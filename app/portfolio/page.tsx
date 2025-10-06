@@ -1,80 +1,11 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import { getPortfolios } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
 
-interface Portfolio {
-  id: number;
-  title: string;
-  slug: string;
-  company?: string | null;
-  category?: string | null;
-  description?: string | null;
-  tags?: string[];
-  image?: string | null;
-  gallery?: Array<{ url: string; thumb: string }>;
-  created_at: string;
-}
+export const dynamic = "force-dynamic";
 
-export default function PortfolioPage() {
-  const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchPortfolios() {
-      try {
-        const res = await fetch(
-          "https://portfolio-hmd-backend.free.nf/api/portfolios",
-          {
-            cache: "no-store",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const data = await res.json();
-        console.log("✅ Data fetched:", data);
-        setPortfolios(data);
-      } catch (err) {
-        console.error("❌ Fetch error:", err);
-        setError(err instanceof Error ? err.message : "Failed to fetch");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchPortfolios();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">Portfolio</h1>
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">Portfolio</h1>
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-          <p className="font-bold">Error loading portfolios:</p>
-          <p>{error}</p>
-        </div>
-      </div>
-    );
-  }
+export default async function PortfolioPage() {
+  const portfolios = await getPortfolios();
 
   if (!portfolios || portfolios.length === 0) {
     return (
