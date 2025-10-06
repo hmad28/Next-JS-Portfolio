@@ -2,24 +2,20 @@ import { getPortfolioBySlug } from "@/lib/api";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-// QUICK FIX: Force dynamic rendering
+// Force dynamic rendering
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-// HAPUS atau COMMENT OUT generateStaticParams
-// export async function generateStaticParams() {
-//   const portfolios = await getPortfolios();
-//   return portfolios.map((portfolio) => ({
-//     slug: portfolio.slug,
-//   }));
-// }
+// HAPUS generateStaticParams untuk avoid build error dengan unstable API
 
-interface PageProps {
-  params: { slug: string };
-}
-
-export default async function PortfolioDetailPage({ params }: PageProps) {
-  const portfolio = await getPortfolioBySlug(params.slug);
+export default async function PortfolioDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  // Next.js 15: params is now a Promise
+  const { slug } = await params;
+  const portfolio = await getPortfolioBySlug(slug);
 
   if (!portfolio) {
     notFound();
