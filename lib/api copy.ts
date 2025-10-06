@@ -1,11 +1,5 @@
-// Deteksi environment dan gunakan URL absolut
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  (typeof window === "undefined"
-    ? process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api`
-      : "http://localhost:3000/api"
-    : "/api");
+// Gunakan proxy API route di Vercel, bukan direct ke backend
+const API_URL = "/api";
 
 export interface Portfolio {
   id: number;
@@ -25,10 +19,7 @@ export interface Portfolio {
 
 export async function getPortfolios(): Promise<Portfolio[]> {
   try {
-    const url = `${API_URL}/portfolios`;
-    console.log("Fetching portfolios from:", url);
-
-    const res = await fetch(url, {
+    const res = await fetch(`${API_URL}/portfolios`, {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
@@ -58,10 +49,7 @@ export async function getPortfolioBySlug(
   slug: string
 ): Promise<Portfolio | null> {
   try {
-    const url = `${API_URL}/portfolios/${slug}`;
-    console.log("Fetching portfolio from:", url);
-
-    const res = await fetch(url, {
+    const res = await fetch(`${API_URL}/portfolios/${slug}`, {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
