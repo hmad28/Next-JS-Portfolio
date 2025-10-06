@@ -1,80 +1,16 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import { getPortfolios } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
 
-interface Portfolio {
-  id: number;
-  title: string;
-  slug: string;
-  company?: string | null;
-  category?: string | null;
-  description?: string | null;
-  tags?: string[];
-  image?: string | null;
-  gallery?: Array<{ url: string; thumb: string }>;
-  created_at: string;
-}
+// Force dynamic - important!
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
-export default function PortfolioPage() {
-  const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default async function PortfolioPage() {
+  const portfolios = await getPortfolios();
 
-  useEffect(() => {
-    async function fetchPortfolios() {
-      try {
-        const res = await fetch(
-          "https://portfolio-hmd-backend.free.nf/api/portfolios",
-          {
-            cache: "no-store",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const data = await res.json();
-        console.log("✅ Data fetched:", data);
-        setPortfolios(data);
-      } catch (err) {
-        console.error("❌ Fetch error:", err);
-        setError(err instanceof Error ? err.message : "Failed to fetch");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchPortfolios();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">Portfolio</h1>
-        <div className="flex items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">Portfolio</h1>
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-          <p className="font-bold">Error loading portfolios:</p>
-          <p>{error}</p>
-        </div>
-      </div>
-    );
-  }
+  // Log untuk debug di Vercel
+  console.log("Portfolio count:", portfolios?.length || 0);
 
   if (!portfolios || portfolios.length === 0) {
     return (
@@ -107,7 +43,7 @@ export default function PortfolioPage() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    unoptimized
+                    unoptimized // Tambahkan ini karena external image
                   />
                 </div>
               ) : (
@@ -117,7 +53,7 @@ export default function PortfolioPage() {
               )}
 
               <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition">
+                <h2 className="text-xl font-semibold mb-2">
                   {portfolio.title}
                 </h2>
 
@@ -135,7 +71,7 @@ export default function PortfolioPage() {
 
                 {portfolio.tags && portfolio.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1 mt-2">
-                    {portfolio.tags.slice(0, 3).map((tag) => (
+                    {portfolio.tags.map((tag) => (
                       <span
                         key={tag}
                         className="text-xs bg-gray-100 px-2 py-1 rounded"
