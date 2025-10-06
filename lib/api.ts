@@ -10,7 +10,7 @@ export interface Portfolio {
   category?: string | null;
   description?: string | null;
   tags?: string[];
-  image?: string | null; // Bisa null
+  image?: string | null;
   gallery?: Array<{
     url: string;
     thumb: string;
@@ -25,16 +25,37 @@ export async function getPortfolios(): Promise<Portfolio[]> {
       headers: {
         "Content-Type": "application/json",
       },
+      // PENTING: Tambahkan timeout untuk free hosting
+      signal: AbortSignal.timeout(10000), // 10 detik timeout
     });
 
     if (!res.ok) {
-      console.error("Failed to fetch portfolios:", res.status);
+      console.error("Failed to fetch portfolios:", res.status, res.statusText);
       return [];
     }
 
-    return res.json();
+    // CEK apakah response benar-benar JSON
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      console.error("Response bukan JSON:", contentType);
+      const text = await res.text();
+      console.error("Response body:", text.substring(0, 200)); // Log 200 char pertama
+      return [];
+    }
+
+    const data = await res.json();
+    
+    // Validasi data adalah array
+    if (!Array.isArray(data)) {
+      console.error("Response bukan array:", typeof data);
+      return [];
+    }
+
+    return data;
   } catch (error) {
-    console.error("Error fetching portfolios:", error);
+    if (error instanceof Error) {
+      console.error("Error fetching portfolios:", error.message);
+    }
     return [];
   }
 }
@@ -48,16 +69,25 @@ export async function getPortfolioBySlug(
       headers: {
         "Content-Type": "application/json",
       },
+      signal: AbortSignal.timeout(10000),
     });
 
     if (!res.ok) {
-      console.error("Failed to fetch portfolio:", res.status);
+      console.error("Failed to fetch portfolio:", res.status, res.statusText);
+      return null;
+    }
+
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      console.error("Response bukan JSON:", contentType);
       return null;
     }
 
     return res.json();
   } catch (error) {
-    console.error("Error fetching portfolio:", error);
+    if (error instanceof Error) {
+      console.error("Error fetching portfolio:", error.message);
+    }
     return null;
   }
 }

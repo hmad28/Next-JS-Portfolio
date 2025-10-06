@@ -1,25 +1,26 @@
-import { getPortfolioBySlug, getPortfolios } from "@/lib/api";
+import { getPortfolioBySlug } from "@/lib/api";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-export async function generateStaticParams() {
-  const portfolios = await getPortfolios();
-  return portfolios.map((portfolio) => ({
-    slug: portfolio.slug,
-  }));
+// QUICK FIX: Force dynamic rendering
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+// HAPUS atau COMMENT OUT generateStaticParams
+// export async function generateStaticParams() {
+//   const portfolios = await getPortfolios();
+//   return portfolios.map((portfolio) => ({
+//     slug: portfolio.slug,
+//   }));
+// }
+
+interface PageProps {
+  params: { slug: string };
 }
 
-export default async function PortfolioDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  // Await params terlebih dahulu
-  const { slug } = await params;
+export default async function PortfolioDetailPage({ params }: PageProps) {
+  const portfolio = await getPortfolioBySlug(params.slug);
 
-  const portfolio = await getPortfolioBySlug(slug);
-
-  // Jika portfolio tidak ditemukan, tampilkan 404
   if (!portfolio) {
     notFound();
   }
