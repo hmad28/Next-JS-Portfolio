@@ -7,7 +7,7 @@ import Client from "./components/client";
 import TextNeon from "./components/textNeon";
 import { useState } from "react";
 import Testimonial from "./components/testimonial";
-import Portfolio from "./components/portfolio";
+import Portfolio from "@/components/portfolio";
 
 export default function Home() {
   useEffect(() => {
@@ -526,7 +526,7 @@ export default function Home() {
               list of my skills
             </h3>
             <h2 className="text-5xl md:text-8xl font-extrabold text-white">
-              Programming Skills
+              Technical Skills
             </h2>
           </div>
           <div className="w-full flex flex-col gap-3 text-white">
