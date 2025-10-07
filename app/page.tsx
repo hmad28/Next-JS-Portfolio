@@ -610,7 +610,7 @@ export default function Home() {
               fill
               className="object-cover object-top"
             />
-            <div className="absolute bg-black/40 py-10 px-4 md:px-15 w-full h-full">
+            <div className="absolute bg-black/40 py-10 backdrop-blur-[3px] px-4 md:px-15 w-full h-full">
               <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-300 uppercase drop-shadow-lg drop-shadow-zinc-600">
                 Introduction
               </h3>
@@ -652,7 +652,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div
+          {/* <div
             className="absolute z-1 top-5/6 md:top-6/6 left-1/2 drop-shadow-xl drop-shadow-zinc-800 parallax-box"
             style={
               { "--offsetY": `${offsetY * -0.08}px` } as React.CSSProperties
@@ -732,7 +732,7 @@ export default function Home() {
               height={50}
               className="rounded-lg"
             />
-          </div>
+          </div> */}
         </div>
       </section>
 
