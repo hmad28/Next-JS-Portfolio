@@ -48,28 +48,28 @@ export default async function PortfolioDetailPage({
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div className="min-h-screen bg-white :bg-gray-950 pt-15">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         {/* Back Button */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-8"
+          className="inline-flex items-center gap-2 text-sm text-gray-600 :text-gray-400 hover:text-gray-900 :hover:text-white mb-8"
         >
           ← Back to Portfolio
         </Link>
 
         {/* Header */}
         <div className="mb-8">
-          <p className="text-sm font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-2">
+          <p className="text-sm font-medium text-blue-600 :text-blue-400 uppercase tracking-wider mb-2">
             {portfolio.category}
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 :text-white mb-4">
             {portfolio.title}
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-2">
+          <p className="text-xl text-gray-600 :text-gray-400 mb-2">
             {portfolio.company}
           </p>
-          <p className="text-sm text-gray-500 dark:text-gray-500">
+          <p className="text-sm text-gray-500 :text-gray-500">
             Created in{" "}
             {new Date(portfolio.projectDate).toLocaleDateString("en-US", {
               year: "numeric",
@@ -83,7 +83,7 @@ export default async function PortfolioDetailPage({
           {portfolio.tag.map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium"
+              className="px-3 py-1 bg-gray-100 :bg-gray-800 text-gray-700 :text-gray-300 rounded-full text-sm font-medium"
             >
               {tag}
             </span>
@@ -102,9 +102,9 @@ export default async function PortfolioDetailPage({
         </div>
 
         {/* Description */}
-        <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
+        <div className="prose prose-lg :prose-invert max-w-none mb-12">
           <h2 className="text-2xl font-bold mb-4">About This Project</h2>
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p className="text-gray-700 :text-gray-300 leading-relaxed">
             {portfolio.description}
           </p>
         </div>
@@ -112,7 +112,7 @@ export default async function PortfolioDetailPage({
         {/* Gallery */}
         {portfolio.gallery && portfolio.gallery.length > 0 && (
           <div>
-            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900 :text-white">
               Gallery
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
