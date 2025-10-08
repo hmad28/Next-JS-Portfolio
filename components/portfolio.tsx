@@ -76,7 +76,7 @@ export default function Portfolio() {
             className="group relative block bg-black 2xl:h-[650px] overflow-hidden"
           >
             <Image
-              src={`/images/${item.image}`}
+              src={item.image}
               alt={item.title}
               fill
               loading="lazy"
@@ -125,7 +125,10 @@ export default function Portfolio() {
                   <h2 className="text-2xl 2xl:text-3xl text-white font-bold">
                     {item.company}
                   </h2>
-                  <p className="text-sm text-white line-clamp-3">{item.description}</p>
+                  <p
+                    className="text-sm text-white line-clamp-3"
+                    dangerouslySetInnerHTML={{ __html: item.description }}
+                  />
 
                   <div className="w-full flex gap-2 flex-wrap">
                     <Link
