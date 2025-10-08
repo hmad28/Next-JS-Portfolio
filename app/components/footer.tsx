@@ -19,12 +19,12 @@ export default function Footer() {
               </div>
             </div>
 
-            <p className="mt-4 max-w-xs text-gray-500 dark:text-gray-400">
+            <div className="mt-4 max-w-xs text-gray-500 dark:text-gray-400">
               <p className='text-sm 2xl:text-base'>
                 Hi, I&apos;m Hammad (aka Matt, Muhammad). Web fullstack
                 developer, video editor, graphic designer, and lifelong student.
               </p>
-            </p>
+            </div>
 
             <ul className="mt-8 flex gap-6 items-center">
               <li>

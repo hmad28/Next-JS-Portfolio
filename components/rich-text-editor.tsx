@@ -43,6 +43,7 @@ export function RichTextEditor({
       Color,
     ],
     content: value,
+    immediatelyRender: false, // FIX SSR
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },

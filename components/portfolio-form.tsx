@@ -12,10 +12,12 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { X } from "lucide-react";
 import { TagSelector } from "@/components/tag-selector";
 import { RichTextEditor } from "@/components/rich-text-editor";
-import { UploadButton } from "@/lib/uploadthing";
+import {
+  CustomUploadButton,
+  CustomGalleryUpload,
+} from "@/components/custom-upload-button";
 
 interface Portfolio {
   id?: number;
@@ -59,11 +61,6 @@ export function PortfolioForm({
 }: PortfolioFormProps) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<Portfolio>(initialFormState);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (portfolio && open) {
@@ -118,11 +115,6 @@ export function PortfolioForm({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const removeGalleryImage = (index: number) => {
-    const newGallery = formData.gallery.filter((_, i) => i !== index);
-    setFormData({ ...formData, gallery: newGallery });
   };
 
   return (
@@ -183,7 +175,7 @@ export function PortfolioForm({
             </div>
           </div>
 
-          {/* Rich Text Editor untuk Description */}
+          {/* Rich Text Editor */}
           <RichTextEditor
             label="Description"
             value={formData.description}
@@ -218,90 +210,44 @@ export function PortfolioForm({
             </div>
           </div>
 
-          {/* Main Image Upload dengan UploadThing */}
+          {/* Main Image Upload */}
           <div className="space-y-2">
             <Label>Main Image *</Label>
-            {formData.image ? (
-              <div className="relative inline-block">
-                <img
-                  src={formData.image}
-                  alt="Main"
-                  className="h-32 w-auto rounded border"
-                />
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="icon"
-                  className="absolute -top-2 -right-2 h-6 w-6"
-                  onClick={() => setFormData({ ...formData, image: "" })}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            ) : (
-              mounted && (
-                <UploadButton
-                  endpoint="imageUploader"
-                  onClientUploadComplete={(res) => {
-                    if (res && res[0]) {
-                      setFormData({ ...formData, image: res[0].url });
-                    }
-                  }}
-                  onUploadError={(error: Error) => {
-                    alert(`Upload error: ${error.message}`);
-                  }}
-                />
-              )
-            )}
+            <CustomUploadButton
+              endpoint="imageUploader"
+              value={formData.image}
+              onUploadComplete={(url) =>
+                setFormData({ ...formData, image: url })
+              }
+              onRemove={() => setFormData({ ...formData, image: "" })}
+            />
           </div>
 
+          {/* Tags Selector */}
           <TagSelector
             selectedTags={formData.tag}
             onChange={(tags) => setFormData({ ...formData, tag: tags })}
           />
 
-          {/* Gallery Upload dengan UploadThing */}
+          {/* Gallery Upload */}
           <div className="space-y-2">
             <Label>Gallery Images (optional)</Label>
-            {formData.gallery.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-2">
-                {formData.gallery.map((img, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={img}
-                      alt={`Gallery ${index + 1}`}
-                      className="h-24 w-24 object-cover rounded border"
-                    />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="icon"
-                      className="absolute -top-2 -right-2 h-6 w-6"
-                      onClick={() => removeGalleryImage(index)}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            )}
-            {mounted && (
-              <UploadButton
-                endpoint="galleryUploader"
-                onClientUploadComplete={(res) => {
-                  if (res) {
-                    const newImages = res.map((file) => file.url);
-                    setFormData({
-                      ...formData,
-                      gallery: [...formData.gallery, ...newImages],
-                    });
-                  }
-                }}
-                onUploadError={(error: Error) => {
-                  alert(`Upload error: ${error.message}`);
-                }}
-              />
-            )}
+            <CustomGalleryUpload
+              endpoint="galleryUploader"
+              values={formData.gallery}
+              onUploadComplete={(urls) =>
+                setFormData({
+                  ...formData,
+                  gallery: [...formData.gallery, ...urls],
+                })
+              }
+              onRemove={(index) =>
+                setFormData({
+                  ...formData,
+                  gallery: formData.gallery.filter((_, i) => i !== index),
+                })
+              }
+            />
           </div>
 
           <DialogFooter>
