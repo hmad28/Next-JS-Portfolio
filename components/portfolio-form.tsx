@@ -234,7 +234,7 @@ export function PortfolioForm({
                 </Button>
               </div>
             ) : (
-              <UploadDropzone
+              <UploadButton
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
                   if (res && res[0]) {
@@ -276,7 +276,7 @@ export function PortfolioForm({
                 </div>
               ))}
             </div>
-            <UploadButton
+            <UploadDropzone
               endpoint="imageUploader"
               onClientUploadComplete={(res) => {
                 if (res) {
