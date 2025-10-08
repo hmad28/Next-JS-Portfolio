@@ -6,6 +6,7 @@ export const toolStyles: Record<string, { bg: string; text: string }> = {
   Photography: { bg: "bg-slate-600/90", text: "text-slate-300" },
   Videography: { bg: "bg-gray-400/90", text: "text-gray-200" },
   "Fifa Kit Creator": { bg: "bg-black", text: "text-green-400" },
+  "Ms Word": { bg: "bg-blue-700", text: "text-white" },
 
   // === LANGUAGES ===
   HTML: { bg: "bg-orange-500/90", text: "text-orange-100" },

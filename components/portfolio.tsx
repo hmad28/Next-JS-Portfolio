@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "../app/icon/arrow";
 import { toolStyles } from "@/lib/tech-config";
+import { categoryStyles } from "@/lib/category-config";
 
 interface Portfolio {
   id: number;
@@ -20,15 +21,6 @@ interface Portfolio {
   gallery: string[];
   projectDate: string;
 }
-
-// Mapping category ke warna
-const categoryColors: Record<string, string> = {
-  Design: "text-orange-500",
-  Teach: "text-teal-500",
-  "Frontend Development": "text-blue-500",
-  "Video Editing": "text-purple-500",
-  Multimedia: "text-yellow-500",
-};
 
 export default function Portfolio() {
   const [portfolioItems, setPortfolioItems] = useState<Portfolio[]>([]);
@@ -86,7 +78,7 @@ export default function Portfolio() {
             <div className="relative p-4 sm:p-6 lg:p-8 drop-shadow-lg drop-shadow-gray-700">
               <p
                 className={`text-sm font-medium tracking-widest uppercase ${
-                  categoryColors[item.category] || "text-gray-500"
+                  categoryStyles[item.category]?.text || "text-gray-500"
                 }`}
               >
                 {item.category}

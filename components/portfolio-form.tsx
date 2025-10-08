@@ -13,6 +13,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { TagSelector } from "@/components/tag-selector";
+import { CategorySelector } from "@/components/category-selector";
 import { RichTextEditor } from "@/components/rich-text-editor";
 import {
   CustomUploadButton,
@@ -163,16 +164,10 @@ export function PortfolioForm({
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="category">Category *</Label>
-              <Input
-                id="category"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            <CategorySelector
+              selectedCategory={formData.category}
+              onChange={(category) => setFormData({ ...formData, category })}
+            />
           </div>
 
           {/* Rich Text Editor */}

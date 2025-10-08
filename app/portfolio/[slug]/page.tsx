@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { toolStyles } from "@/lib/tech-config";
 
 interface Portfolio {
   id: number;
@@ -102,14 +103,20 @@ export default async function PortfolioDetailPage({
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {portfolio.tag.map((tag) => (
-            <span
-              key={tag}
-              className="px-3 py-1 bg-gray-100 :bg-gray-800 text-gray-700 :text-gray-300 rounded-full text-sm font-medium"
-            >
-              {tag}
-            </span>
-          ))}
+          {portfolio.tag.map((tool) => {
+            const style = toolStyles[tool] || {
+              bg: "bg-gray-600/90",
+              text: "text-gray-200",
+            };
+            return (
+              <div
+                key={tool}
+                className={`px-3 py-1 font-mono text-sm md:text-xs 2xl:text-sm rounded ${style.bg} ${style.text}`}
+              >
+                {tool}
+              </div>
+            );
+          })}
         </div>
 
         {/* Main Image */}
