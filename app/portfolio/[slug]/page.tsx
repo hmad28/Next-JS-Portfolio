@@ -47,12 +47,27 @@ export default async function PortfolioDetailPage({
     notFound();
   }
 
-  const cleanHTML = (html: string) => {
-    return html
-      .replace(/<p>\s*<\/p>/g, "")
-      .replace(/<p><\/p>/g, "")
-      .replace(/<\/p>\s*<p>/g, "</p><br><p>")
-      .trim();
+  const cleanHTML = (html: string): string => {
+    return (
+      html
+        // Hapus <p> atau <li> yang kosong
+        .replace(/<p>\s*<\/p>/g, "")
+        .replace(/<li>\s*<\/li>/g, "")
+
+        // Hapus <br> yang ada di antara closing dan opening tag <p>
+        .replace(/<\/p>\s*<br\s*\/?>\s*<p>/gi, "</p><p>")
+
+        // Hapus multiple <br> berturut-turut (lebih dari 1)
+        .replace(/(<br\s*\/?>[\s]*){2,}/gi, "<br>")
+
+        // Hapus <br> di awal atau akhir <p>
+        .replace(/<p>\s*<br\s*\/?>/gi, "<p>")
+        .replace(/<br\s*\/?>\s*<\/p>/gi, "</p>")
+
+        // Cleanup whitespace berlebih
+        .replace(/\s+/g, " ")
+        .trim()
+    );
   };
 
   return (
