@@ -13,8 +13,11 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { X } from "lucide-react";
 import { ImageUpload, GalleryUpload } from "@/components/image-upload";
 import { TagSelector } from "@/components/tag-selector";
+// import { RichTextEditor } from "@/components/rich-text-editor";
+import { RichTextEditor } from "@/components/rich-text-editor";
 
 interface Portfolio {
   id?: number;
@@ -27,7 +30,7 @@ interface Portfolio {
   tag: string[];
   image: string;
   gallery: string[];
-  projectDate: string;
+  projectDate: string; // Format: YYYY-MM-DD
 }
 
 interface PortfolioFormProps {
@@ -47,7 +50,7 @@ const initialFormState: Portfolio = {
   tag: [],
   image: "",
   gallery: [],
-  projectDate: new Date().toISOString().split("T")[0],
+  projectDate: new Date().toISOString().split("T")[0], // Default hari ini
 };
 
 export function PortfolioForm({
@@ -59,16 +62,18 @@ export function PortfolioForm({
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<Portfolio>(initialFormState);
 
+  // Auto-fill data ketika portfolio berubah (mode edit)
   useEffect(() => {
     if (portfolio && open) {
-      console.log("Loading portfolio data:", portfolio);
+      console.log("Loading portfolio data:", portfolio); // Debug
       setFormData({
         ...portfolio,
         link: portfolio.link || "",
         gallery: portfolio.gallery || [],
       });
     } else if (!portfolio && open) {
-      console.log("Resetting form for create");
+      // Reset form ketika buka dialog untuk create
+      console.log("Resetting form for create"); // Debug
       setFormData(initialFormState);
     }
   }, [portfolio, open]);
@@ -83,7 +88,7 @@ export function PortfolioForm({
         : "/api/portfolios";
       const method = portfolio ? "PUT" : "POST";
 
-      console.log("Submitting:", { url, method, formData });
+      console.log("Submitting:", { url, method, formData }); // Debug
 
       const res = await fetch(url, {
         method,
@@ -94,7 +99,7 @@ export function PortfolioForm({
       if (res.ok) {
         onSuccess();
         onOpenChange(false);
-        setFormData(initialFormState);
+        setFormData(initialFormState); // Reset setelah sukses
       } else {
         const error = await res.json();
         console.error("Server error:", error);
@@ -116,126 +121,99 @@ export function PortfolioForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="md:max-w-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-lg sm:text-xl">
+          <DialogTitle>
             {portfolio ? "Edit Portfolio" : "Add New Portfolio"}
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className=" space-y-4 sm:space-y-5">
-          {/* Title & Slug - Stack on mobile, grid on desktop */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="title" className="text-sm font-medium">
-                Title *
-              </Label>
+              <Label htmlFor="title">Title *</Label>
               <Input
                 id="title"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="h-10 sm:h-11"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="slug" className="text-sm font-medium">
-                Slug *
-              </Label>
+              <Label htmlFor="slug">Slug *</Label>
               <Input
                 id="slug"
                 name="slug"
                 value={formData.slug}
                 onChange={handleChange}
-                className="h-10 sm:h-11"
                 required
               />
             </div>
           </div>
 
-          {/* Company & Category */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="company" className="text-sm font-medium">
-                Company *
-              </Label>
+              <Label htmlFor="company">Company *</Label>
               <Input
                 id="company"
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
-                className="h-10 sm:h-11"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category" className="text-sm font-medium">
-                Category *
-              </Label>
+              <Label htmlFor="category">Category *</Label>
               <Input
                 id="category"
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="h-10 sm:h-11"
                 required
               />
             </div>
           </div>
 
-          {/* Description */}
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-sm font-medium">
-              Description *
-            </Label>
+            <Label htmlFor="description">Description *</Label>
             <Textarea
               id="description"
               name="description"
               value={formData.description}
               onChange={handleChange}
               rows={4}
-              className="resize-none text-sm sm:text-base"
               required
             />
           </div>
 
-          {/* Project Date & Link */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="projectDate" className="text-sm font-medium">
-                Project Date *
-              </Label>
+              <Label htmlFor="projectDate">Project Date *</Label>
               <Input
                 id="projectDate"
                 name="projectDate"
                 type="date"
                 value={formData.projectDate}
                 onChange={handleChange}
-                className="h-10 sm:h-11"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="link" className="text-sm font-medium">
-                Link (optional)
-              </Label>
+              <Label htmlFor="link">Link (optional)</Label>
               <Input
                 id="link"
                 name="link"
                 type="url"
                 value={formData.link}
                 onChange={handleChange}
-                className="h-10 sm:h-11"
-                placeholder="https://..."
               />
             </div>
           </div>
 
-          {/* Image Upload */}
           <ImageUpload
             label="Main Image"
             value={formData.image}
@@ -245,13 +223,11 @@ export function PortfolioForm({
             required
           />
 
-          {/* Tags */}
           <TagSelector
             selectedTags={formData.tag}
             onChange={(tags) => setFormData({ ...formData, tag: tags })}
           />
 
-          {/* Gallery */}
           <GalleryUpload
             value={formData.gallery}
             onChange={(filenames) =>
@@ -259,22 +235,15 @@ export function PortfolioForm({
             }
           />
 
-          {/* Action Buttons */}
-          <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0">
+          <DialogFooter>
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="w-full sm:w-auto order-2 sm:order-1"
-              disabled={loading}
             >
               Cancel
             </Button>
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full sm:w-auto order-1 sm:order-2"
-            >
+            <Button type="submit" disabled={loading}>
               {loading ? "Saving..." : portfolio ? "Update" : "Create"}
             </Button>
           </DialogFooter>
