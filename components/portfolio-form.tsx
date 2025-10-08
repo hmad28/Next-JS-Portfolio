@@ -4,7 +4,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
   Dialog,
@@ -14,10 +13,9 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { X } from "lucide-react";
-import { ImageUpload, GalleryUpload } from "@/components/image-upload";
 import { TagSelector } from "@/components/tag-selector";
-// import { RichTextEditor } from "@/components/rich-text-editor";
 import { RichTextEditor } from "@/components/rich-text-editor";
+import { UploadButton, UploadDropzone } from "@/lib/uploadthing";
 
 interface Portfolio {
   id?: number;
@@ -30,7 +28,7 @@ interface Portfolio {
   tag: string[];
   image: string;
   gallery: string[];
-  projectDate: string; // Format: YYYY-MM-DD
+  projectDate: string;
 }
 
 interface PortfolioFormProps {
@@ -50,7 +48,7 @@ const initialFormState: Portfolio = {
   tag: [],
   image: "",
   gallery: [],
-  projectDate: new Date().toISOString().split("T")[0], // Default hari ini
+  projectDate: new Date().toISOString().split("T")[0],
 };
 
 export function PortfolioForm({
@@ -62,18 +60,16 @@ export function PortfolioForm({
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<Portfolio>(initialFormState);
 
-  // Auto-fill data ketika portfolio berubah (mode edit)
   useEffect(() => {
     if (portfolio && open) {
-      console.log("Loading portfolio data:", portfolio); // Debug
+      console.log("Loading portfolio data:", portfolio);
       setFormData({
         ...portfolio,
         link: portfolio.link || "",
         gallery: portfolio.gallery || [],
       });
     } else if (!portfolio && open) {
-      // Reset form ketika buka dialog untuk create
-      console.log("Resetting form for create"); // Debug
+      console.log("Resetting form for create");
       setFormData(initialFormState);
     }
   }, [portfolio, open]);
@@ -88,7 +84,7 @@ export function PortfolioForm({
         : "/api/portfolios";
       const method = portfolio ? "PUT" : "POST";
 
-      console.log("Submitting:", { url, method, formData }); // Debug
+      console.log("Submitting:", { url, method, formData });
 
       const res = await fetch(url, {
         method,
@@ -99,7 +95,7 @@ export function PortfolioForm({
       if (res.ok) {
         onSuccess();
         onOpenChange(false);
-        setFormData(initialFormState); // Reset setelah sukses
+        setFormData(initialFormState);
       } else {
         const error = await res.json();
         console.error("Server error:", error);
@@ -117,6 +113,11 @@ export function PortfolioForm({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const removeGalleryImage = (index: number) => {
+    const newGallery = formData.gallery.filter((_, i) => i !== index);
+    setFormData({ ...formData, gallery: newGallery });
   };
 
   return (
@@ -177,17 +178,15 @@ export function PortfolioForm({
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description *</Label>
-            <Textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              rows={4}
-              required
-            />
-          </div>
+          {/* Rich Text Editor untuk Description */}
+          <RichTextEditor
+            label="Description"
+            value={formData.description}
+            onChange={(value) =>
+              setFormData({ ...formData, description: value })
+            }
+            required
+          />
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -214,26 +213,85 @@ export function PortfolioForm({
             </div>
           </div>
 
-          <ImageUpload
-            label="Main Image"
-            value={formData.image}
-            onChange={(filename) =>
-              setFormData({ ...formData, image: filename })
-            }
-            required
-          />
+          {/* Main Image Upload dengan UploadThing */}
+          <div className="space-y-2">
+            <Label>Main Image *</Label>
+            {formData.image ? (
+              <div className="relative inline-block">
+                <img
+                  src={formData.image}
+                  alt="Main"
+                  className="h-32 w-auto rounded border"
+                />
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className="absolute -top-2 -right-2 h-6 w-6"
+                  onClick={() => setFormData({ ...formData, image: "" })}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <UploadButton
+                endpoint="imageUploader"
+                onClientUploadComplete={(res) => {
+                  if (res && res[0]) {
+                    setFormData({ ...formData, image: res[0].url });
+                  }
+                }}
+                onUploadError={(error: Error) => {
+                  alert(`Upload error: ${error.message}`);
+                }}
+              />
+            )}
+          </div>
 
           <TagSelector
             selectedTags={formData.tag}
             onChange={(tags) => setFormData({ ...formData, tag: tags })}
           />
 
-          <GalleryUpload
-            value={formData.gallery}
-            onChange={(filenames) =>
-              setFormData({ ...formData, gallery: filenames })
-            }
-          />
+          {/* Gallery Upload dengan UploadThing */}
+          <div className="space-y-2">
+            <Label>Gallery Images (optional)</Label>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {formData.gallery.map((img, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={img}
+                    alt={`Gallery ${index + 1}`}
+                    className="h-24 w-24 object-cover rounded border"
+                  />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="icon"
+                    className="absolute -top-2 -right-2 h-6 w-6"
+                    onClick={() => removeGalleryImage(index)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+            <UploadButton
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                if (res) {
+                  const newImages = res.map((file) => file.url);
+                  setFormData({
+                    ...formData,
+                    gallery: [...formData.gallery, ...newImages],
+                  });
+                }
+              }}
+              onUploadError={(error: Error) => {
+                alert(`Upload error: ${error.message}`);
+              }}
+            />
+          </div>
 
           <DialogFooter>
             <Button
