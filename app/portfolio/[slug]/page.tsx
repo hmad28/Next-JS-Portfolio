@@ -50,22 +50,21 @@ export default async function PortfolioDetailPage({
   const cleanHTML = (html: string): string => {
     return (
       html
-        // Hapus <p> atau <li> yang kosong
-        .replace(/<p>\s*<\/p>/g, "")
-        .replace(/<li>\s*<\/li>/g, "")
+        // 1. Hapus <p></p> kosong dan ganti dengan spacing
+        .replace(/<p>\s*<\/p>/g, '<div class="h-4"></div>')
 
-        // Hapus <br> yang ada di antara closing dan opening tag <p>
-        .replace(/<\/p>\s*<br\s*\/?>\s*<p>/gi, "</p><p>")
+        // 2. Untuk <p><br>, pindahkan <br> ke luar sebagai spacing
+        .replace(/<p>\s*<br\s*\/?>\s*/gi, '<div class="h-4"></div><p>')
 
-        // Hapus multiple <br> berturut-turut (lebih dari 1)
-        .replace(/(<br\s*\/?>[\s]*){2,}/gi, "<br>")
+        // 3. Hapus <br> di akhir <p>
+        .replace(/\s*<br\s*\/?>\s*<\/p>/gi, "</p>")
 
-        // Hapus <br> di awal atau akhir <p>
-        .replace(/<p>\s*<br\s*\/?>/gi, "<p>")
-        .replace(/<br\s*\/?>\s*<\/p>/gi, "</p>")
+        // 4. Hapus multiple spacing berlebih
+        .replace(
+          /(<div class="h-4"><\/div>\s*){2,}/g,
+          '<div class="h-4"></div>'
+        )
 
-        // Cleanup whitespace berlebih
-        .replace(/\s+/g, " ")
         .trim()
     );
   };
@@ -130,22 +129,25 @@ export default async function PortfolioDetailPage({
             About This Project
           </h2>
           <div
-            className="prose prose-lg :prose-invert max-w-none whitespace-pre-wrap
-              prose-p:text-gray-700 :prose-p:text-gray-300 prose-p:mb-4 prose-p:leading-relaxed
-              prose-headings:text-gray-900 :prose-headings:text-white prose-headings:mb-3 prose-headings:mt-6
-              prose-h2:text-2xl prose-h3:text-xl
-              prose-strong:text-gray-900 :prose-strong:text-white prose-strong:font-semibold
-              prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
-              prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
-              prose-li:mb-2
-              prose-blockquote:border-l-4 prose-blockquote:border-l-blue-500 
-              prose-blockquote:bg-gray-50 :prose-blockquote:bg-gray-800
-              prose-blockquote:py-3 prose-blockquote:px-4 prose-blockquote:my-4 prose-blockquote:rounded-r
-              prose-blockquote:italic
-              prose-code:text-pink-600 :prose-code:text-pink-400 prose-code:bg-gray-100 :prose-code:bg-gray-800
-              prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-              prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:p-4 prose-pre:rounded-lg prose-pre:my-4
-              prose-a:text-blue-600 :prose-a:text-blue-400 prose-a:underline"
+            className="prose prose-lg :prose-invert max-w-none
+            [&_p]:mb-4 [&_p]:text-gray-700 :[&_p]:text-gray-300 [&_p]:leading-relaxed
+            [&_h1]:text-gray-900 :[&_h1]:text-white [&_h1]:mb-3 [&_h1]:mt-6
+            [&_h2]:text-gray-900 :[&_h2]:text-white [&_h2]:mb-3 [&_h2]:mt-6 [&_h2]:text-2xl
+            [&_h3]:text-gray-900 :[&_h3]:text-white [&_h3]:mb-3 [&_h3]:mt-6 [&_h3]:text-xl
+            [&_strong]:text-gray-900 :[&_strong]:text-white [&_strong]:font-semibold
+            [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6
+            [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-6
+            [&_li]:mb-2
+            [&_blockquote]:border-l-4 [&_blockquote]:border-l-blue-500 
+            [&_blockquote]:bg-gray-50 :[&_blockquote]:bg-gray-800
+            [&_blockquote]:py-3 [&_blockquote]:px-4 [&_blockquote]:my-4 
+            [&_blockquote]:rounded-r [&_blockquote]:italic
+            [&_code]:text-pink-600 :[&_code]:text-pink-400 
+            [&_code]:bg-gray-100 :[&_code]:bg-gray-800
+            [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm
+            [&_pre]:bg-gray-900 [&_pre]:text-gray-100 [&_pre]:p-4 
+            [&_pre]:rounded-lg [&_pre]:my-4
+            [&_a]:text-blue-600 :[&_a]:text-blue-400 [&_a]:underline"
             dangerouslySetInnerHTML={{
               __html: cleanHTML(portfolio.description),
             }}
