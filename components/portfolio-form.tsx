@@ -15,7 +15,7 @@ import {
 import { X } from "lucide-react";
 import { TagSelector } from "@/components/tag-selector";
 import { RichTextEditor } from "@/components/rich-text-editor";
-import { UploadButton, UploadDropzone } from "@/lib/uploadthing";
+import { UploadButton } from "@/lib/uploadthing";
 
 interface Portfolio {
   id?: number;
@@ -59,6 +59,11 @@ export function PortfolioForm({
 }: PortfolioFormProps) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<Portfolio>(initialFormState);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (portfolio && open) {
@@ -234,17 +239,19 @@ export function PortfolioForm({
                 </Button>
               </div>
             ) : (
-              <UploadButton
-                endpoint="imageUploader"
-                onClientUploadComplete={(res) => {
-                  if (res && res[0]) {
-                    setFormData({ ...formData, image: res[0].url });
-                  }
-                }}
-                onUploadError={(error: Error) => {
-                  alert(`Upload error: ${error.message}`);
-                }}
-              />
+              mounted && (
+                <UploadButton
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res) => {
+                    if (res && res[0]) {
+                      setFormData({ ...formData, image: res[0].url });
+                    }
+                  }}
+                  onUploadError={(error: Error) => {
+                    alert(`Upload error: ${error.message}`);
+                  }}
+                />
+              )
             )}
           </div>
 
@@ -256,41 +263,45 @@ export function PortfolioForm({
           {/* Gallery Upload dengan UploadThing */}
           <div className="space-y-2">
             <Label>Gallery Images (optional)</Label>
-            <div className="flex flex-wrap gap-2 mb-2">
-              {formData.gallery.map((img, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={img}
-                    alt={`Gallery ${index + 1}`}
-                    className="h-24 w-24 object-cover rounded border"
-                  />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    size="icon"
-                    className="absolute -top-2 -right-2 h-6 w-6"
-                    onClick={() => removeGalleryImage(index)}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-              ))}
-            </div>
-            <UploadDropzone
-              endpoint="imageUploader"
-              onClientUploadComplete={(res) => {
-                if (res) {
-                  const newImages = res.map((file) => file.url);
-                  setFormData({
-                    ...formData,
-                    gallery: [...formData.gallery, ...newImages],
-                  });
-                }
-              }}
-              onUploadError={(error: Error) => {
-                alert(`Upload error: ${error.message}`);
-              }}
-            />
+            {formData.gallery.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-2">
+                {formData.gallery.map((img, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={img}
+                      alt={`Gallery ${index + 1}`}
+                      className="h-24 w-24 object-cover rounded border"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute -top-2 -right-2 h-6 w-6"
+                      onClick={() => removeGalleryImage(index)}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+            {mounted && (
+              <UploadButton
+                endpoint="galleryUploader"
+                onClientUploadComplete={(res) => {
+                  if (res) {
+                    const newImages = res.map((file) => file.url);
+                    setFormData({
+                      ...formData,
+                      gallery: [...formData.gallery, ...newImages],
+                    });
+                  }
+                }}
+                onUploadError={(error: Error) => {
+                  alert(`Upload error: ${error.message}`);
+                }}
+              />
+            )}
           </div>
 
           <DialogFooter>
