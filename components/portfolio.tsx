@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Arrow } from "../app/icon/arrow";
 import { toolStyles } from "@/lib/tech-config";
-import { categoryStyles } from "@/lib/category-config";
 
 interface Portfolio {
   id: number;
@@ -22,9 +21,40 @@ interface Portfolio {
   projectDate: string;
 }
 
+// Mapping category ke warna
+const categoryColors: Record<string, string> = {
+  Design: "text-orange-500",
+  Teach: "text-teal-500",
+  "Frontend Development": "text-blue-500",
+  "Video Editing": "text-purple-500",
+  Multimedia: "text-yellow-500",
+};
+
 export default function Portfolio() {
   const [portfolioItems, setPortfolioItems] = useState<Portfolio[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  // Detect screen size and set items per page
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1536) {
+        // 2xl
+        setItemsPerPage(8);
+      } else if (window.innerWidth >= 768) {
+        // md
+        setItemsPerPage(6);
+      } else {
+        // mobile
+        setItemsPerPage(3);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     async function fetchPortfolios() {
@@ -42,6 +72,19 @@ export default function Portfolio() {
 
     fetchPortfolios();
   }, []);
+
+  // Calculate pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = portfolioItems.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(portfolioItems.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    document
+      .getElementById("portfolio")
+      ?.scrollIntoView({ behavior: "smooth" });
+  };
 
   if (loading) {
     return (
@@ -62,7 +105,7 @@ export default function Portfolio() {
   return (
     <div>
       <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-5">
-        {portfolioItems.map((item) => (
+        {currentItems.map((item) => (
           <div
             key={item.id}
             className="group relative block bg-black 2xl:h-[650px] overflow-hidden"
@@ -72,13 +115,13 @@ export default function Portfolio() {
               alt={item.title}
               fill
               loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover opacity-50 md:opacity-75 transition-opacity group-hover:opacity-50"
+              className="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
             />
 
             <div className="relative p-4 sm:p-6 lg:p-8 drop-shadow-lg drop-shadow-gray-700">
               <p
                 className={`text-sm font-medium tracking-widest uppercase ${
-                  categoryStyles[item.category]?.text || "text-gray-500"
+                  categoryColors[item.category] || "text-gray-500"
                 }`}
               >
                 {item.category}
@@ -95,8 +138,9 @@ export default function Portfolio() {
                 })}
               </p>
 
-              <div className="mt-32 2xl:mt-48">
-                <div className="md:translate-y-8 md:transform md:opacity-0 md:transition-all group-hover:translate-y-0 group-hover:opacity-100 flex flex-col items-start gap-3">
+              <div className="mt-8 sm:mt-32 2xl:mt-48">
+                {/* Mobile: Always visible, Desktop: Show on hover */}
+                <div className="sm:translate-y-8 sm:transform sm:opacity-0 sm:transition-all sm:group-hover:translate-y-0 sm:group-hover:opacity-100 flex flex-col items-start gap-3">
                   <div className="w-full flex gap-2 flex-wrap">
                     {item.tag.map((tool) => {
                       const style = toolStyles[tool] || {
@@ -117,10 +161,16 @@ export default function Portfolio() {
                   <h2 className="text-2xl 2xl:text-3xl text-white font-bold">
                     {item.company}
                   </h2>
-                  <p
-                    className="text-sm text-white line-clamp-3"
-                    dangerouslySetInnerHTML={{ __html: item.description }}
-                  />
+                  <p className="text-sm text-white line-clamp-3">
+                    {item.description
+                      .replace(/<[^>]*>/g, "")
+                      .replace(/&nbsp;/g, " ")
+                      .trim()
+                      .substring(0, 150)}
+                    {item.description.replace(/<[^>]*>/g, "").length > 150
+                      ? "..."
+                      : ""}
+                  </p>
 
                   <div className="w-full flex gap-2 flex-wrap">
                     <Link
@@ -146,6 +196,43 @@ export default function Portfolio() {
           </div>
         ))}
       </section>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-2 mt-8">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Previous
+          </button>
+
+          <div className="flex gap-2">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`w-10 h-10 rounded-lg transition-colors ${
+                  currentPage === page
+                    ? "bg-blue-500 text-white"
+                    : "border border-gray-300 hover:bg-gray-100"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

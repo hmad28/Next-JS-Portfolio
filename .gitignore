@@ -42,5 +42,7 @@ next-env.d.ts
 
 /lib/generated/prisma
 
+/app/dashboard
+
 # public/images/*
 # !public/images/.gitkeep
