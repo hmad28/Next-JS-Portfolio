@@ -71,6 +71,10 @@ export default function Home() {
             playsInline
             preload="auto"
             className="absolute inset-0 w-full h-full object-cover"
+            onLoadStart={(e) => {
+              e.currentTarget.play();
+            }}
+            {...({ fetchpriority: "high" } as any)}
           />
 
           <h1 className="text-xs absolute hidden md:block bottom-20 md:bottom-1 md:left-2 font-semibold font-mono bg-gradient-to-r from-amber-500 via-red-600 to-yellow-300 bg-clip-text text-transparent">
