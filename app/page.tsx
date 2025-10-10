@@ -1,13 +1,43 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Check } from "./icon/check";
 import Client from "./components/client";
 import TextNeon from "./components/textNeon";
-import { useState } from "react";
 import Testimonial from "./components/testimonial";
 import Portfolio from "@/components/portfolio";
+import { motion, useInView } from "framer-motion";
+
+// Animation Variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6 }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const scaleIn = {
+  hidden: { scale: 0.8, opacity: 0 },
+  visible: { 
+    scale: 1, 
+    opacity: 1,
+    transition: { duration: 0.5 }
+  }
+};
 
 export default function Home() {
   useEffect(() => {
@@ -55,6 +85,27 @@ export default function Home() {
 
       return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+    const skillRef = useRef(null);
+    const skillInView = useInView(skillRef, { once: true, margin: "-100px" });
+    const skills = [
+      "HTML",
+      "CSS",
+      "Bootstrap",
+      "Tailwind",
+      "Javascript",
+      "PHP",
+      "Laravel",
+      "Next JS",
+      "Node JS",
+      "MySQL",
+      "Alpine JS",
+      "Python",
+      "TypeScript",
+      "React JS",
+      "Github",
+      "Figma",
+    ];
 
   return (
     <main>
@@ -519,77 +570,65 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Skills Section */}
       <section
         id="skill"
-        className="relative py-8 md:py-20 bg-[url('/images/city-night.jpeg')] bg-cover bg-center overflow-hidden"
+        ref={skillRef}
+        className="relative py-8 md:py-20 bg-[url('/images/city-night.jpeg')] bg-cover bg-center bg-fixed overflow-hidden"
       >
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70 backdrop-blur-sm"></div>
+
         <div className="container mx-auto relative z-10">
-          <div className="w-full mb-8 md:mb-15 px-4 md:px-15 drop-shadow-lg drop-shadow-zinc-800">
-            <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-300 uppercase">
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            animate={skillInView ? "visible" : "hidden"}
+            className="w-full mb-8 md:mb-15 px-4 md:px-15"
+          >
+            <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-300 uppercase mb-2">
               list of my skills
             </h3>
-            <h2 className="text-5xl md:text-8xl font-extrabold text-white">
+            <h2 className="text-5xl md:text-8xl font-extrabold text-white drop-shadow-lg">
               Technical Skills
             </h2>
-          </div>
-          <div className="w-full flex flex-col gap-3 text-white">
-            <div className="w-full flex gap-2 justify-center flex-wrap">
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                HTML
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                CSS
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Bootstrap
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Tailwind
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Javascript
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                PHP
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Laravel
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Next JS
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Node JS
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                MySQL
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Alpine JS
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Python
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                TypeScript
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                React JS
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Github
-              </div>
-              <div className="text-sm md:text-[12px] 2xl:text-base px-2 py-1 border cursor-pointer rounded-lg font-mono transition-transform duration-300 hover:-translate-y-2">
-                Figma
-              </div>
-            </div>
-          </div>
+          </motion.div>
+
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate={skillInView ? "visible" : "hidden"}
+            className="w-full flex gap-2 justify-center flex-wrap px-4"
+          >
+            {skills.map((skill, index) => (
+              <motion.div
+                key={skill}
+                variants={scaleIn}
+                whileHover={{
+                  scale: 1.1,
+                  y: -5,
+                  boxShadow: "0 10px 30px rgba(251, 191, 36, 0.3)",
+                  borderColor: "rgba(251, 191, 36, 0.8)",
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="text-sm md:text-[12px] 2xl:text-base px-4 py-2 border border-white/30 cursor-pointer rounded-lg font-mono text-white bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors duration-300"
+              >
+                {skill}
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
-        <div className="absolute flex justify-center items-center gap-2 rotate-90 md:top-40 font-bold top-13 -left-10">
-          <div className="text-lg text-white md:text-2xl">Skills</div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+          className="absolute flex justify-center items-center gap-2 rotate-90 md:top-40 font-bold top-13 -left-10"
+        >
+          <div className="text-lg text-white md:text-2xl drop-shadow-lg">
+            Skills
+          </div>
           <div className="w-[50px] h-[2px] bg-amber-500"></div>
-        </div>
+        </motion.div>
       </section>
 
       <section id="client" className="bg-white py-8 md:py-20 relative">
