@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
+      "source": "/h-mate",
+      "destination": "https://h-mate-frontend.vercel.app"
+    },
+    {
       "source": "/h-mate/(.*)",
-      "destination": "https://h-mate.vercel.app/$1"
+      "destination": "https://h-mate-frontend.vercel.app/$1"
     }
   ]
 }
