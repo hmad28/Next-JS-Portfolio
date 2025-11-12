@@ -2,7 +2,7 @@
   "redirects": [
     {
       "source": "/h-mate",
-      "destination": "https://h-mate-frontend.vercel.app",
+      "destination": "https://h-mate-frontendv2.vercel.app",
       "permanent": false
     }
   ]

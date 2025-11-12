@@ -8,6 +8,7 @@ import TextNeon from "./components/textNeon";
 import Testimonial from "./components/testimonial";
 import Portfolio from "@/components/portfolio";
 import { motion, useInView } from "framer-motion";
+import ContactSection from "./components/contact";
 
 // Animation Variants
 const fadeInUp = {
@@ -695,87 +696,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-          {/* <div
-            className="absolute z-1 top-5/6 md:top-6/6 left-1/2 drop-shadow-xl drop-shadow-zinc-800 parallax-box"
-            style={
-              { "--offsetY": `${offsetY * -0.08}px` } as React.CSSProperties
-            }
-          >
-            <Image
-              loading="lazy"
-              src="/images/hammad-bridge.jpg"
-              alt="About Image"
-              width={250}
-              height={50}
-              className="rounded-lg"
-            />
-          </div>
-          <div
-            className="absolute z-1 top-9/7 md:top-10/7 left-3/4 md:left-5/7 2xl:left-2/3 -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800 card-two"
-            style={
-              { "--offsetY2": `${offsetY * -0.2}px` } as React.CSSProperties
-            }
-          >
-            <Image
-              loading="lazy"
-              src="/images/about5.png"
-              alt="About Image"
-              width={150}
-              height={50}
-              className="rounded-lg"
-            />
-          </div>
-          <div
-            className="absolute z-1 top-11/8 md:top-10/8 left-3/5 drop-shadow-xl drop-shadow-zinc-800"
-            style={{
-              transform: `translate(-50%, 30%) translateY(${offsetY * -0.2}px)`,
-              transition: "transform 1.5s linear",
-              willChange: "transform",
-            }}
-          >
-            <Image
-              loading="lazy"
-              src="/images/about3.jpg"
-              alt="About Image"
-              width={200}
-              height={50}
-              className="rounded-lg"
-            />
-          </div>
-          <div
-            className="absolute z-1 top-7/8 md:top-11/8 left-4/5 md:left-5/6 2xl:left-3/4 drop-shadow-xl drop-shadow-zinc-800 card-three"
-            style={
-              { "--offsetY3": `${offsetY * -0.1}px` } as React.CSSProperties
-            }
-          >
-            <Image
-              loading="lazy"
-              src="/images/about6.jpg"
-              alt="About Image"
-              width={230}
-              height={50}
-              className="rounded-lg"
-            />
-          </div>
-          <div
-            className="absolute z-1 top-[120%] md:top-[125%] left-[90%] md:left-[85%] -translate-x-1/2 -translate-y-1/2 drop-shadow-xl drop-shadow-zinc-800"
-            style={{
-              transform: `translate(-50%, -50%) translateY(${
-                offsetY * -0.15
-              }px)`,
-              transition: "transform 2s linear",
-              willChange: "transform",
-            }}
-          >
-            <Image
-              loading="lazy"
-              src="/images/about7.jpeg"
-              alt="About Image"
-              width={230}
-              height={50}
-              className="rounded-lg"
-            />
-          </div> */}
         </div>
       </section>
 
@@ -792,6 +712,21 @@ export default function Home() {
           <Testimonial />
         </div>
       </section>
+
+      <section id="contact" className="py-8 md:py-20 relative overflow-hidden">
+        <div className="w-full mb-8 md:mb-15 px-4 md:px-15 drop-shadow-lg drop-shadow-zinc-400">
+          <h3 className="text-[10px] md:text-xs font-bold tracking-wider text-gray-600 uppercase">
+            Hit Me Up
+          </h3>
+          <h2 className="text-5xl md:text-8xl font-extrabold text-black">
+            My Contact
+          </h2>
+        </div>
+        <div className="w-full px-4 md:px-15">
+          <ContactSection />
+        </div>
+      </section>
+
     </main>
   );
 }
