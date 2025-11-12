@@ -18,22 +18,22 @@ export default function ContactSection() {
     email: "",
     message: "",
   });
-  const [isHovered, setIsHovered] = useState(null);
-  const [focusedInput, setFocusedInput] = useState(null);
+  const [isHovered, setIsHovered] = useState<number | null>(null);
+  const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setTimeout(() => {
-      console.log("Form submitted:", formData);
-      alert("Message sent! (Demo only)");
-      setFormData({ name: "", email: "", message: "" });
       setIsSubmitting(false);
-    }, 1500);
+      alert("Pesan berhasil dikirim!");
+    }, 2000);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -71,10 +71,7 @@ export default function ContactSection() {
   ];
 
   return (
-    <section
-      id="contact"
-      className="relative  py-16 sm:py-20 lg:py-24"
-    >
+    <section id="contact" className="relative  py-16 sm:py-20 lg:py-24">
       {/* Enhanced Geometric Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-64 sm:w-96 h-64 sm:h-96 border-4 border-gray-900 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
@@ -272,7 +269,10 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div className="space-y-5 sm:space-y-6 relative z-10">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-5 sm:space-y-6 relative z-10"
+              >
                 {/* Name Input */}
                 <div className="relative group/input">
                   <label className="block text-xs sm:text-sm font-bold text-gray-900 mb-2 sm:mb-3 uppercase tracking-wider">
@@ -332,7 +332,7 @@ export default function ContactSection() {
                       onFocus={() => setFocusedInput("message")}
                       onBlur={() => setFocusedInput(null)}
                       required
-                      rows="4"
+                      rows={4}
                       className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-xl border-2 border-gray-200 focus:border-transparent focus:outline-none transition-all duration-300 resize-none bg-gray-50 focus:bg-white text-gray-900 font-medium text-sm sm:text-base"
                       placeholder="Tell me about your amazing project..."
                     />
@@ -344,7 +344,7 @@ export default function ContactSection() {
 
                 {/* Submit Button */}
                 <button
-                  onClick={handleSubmit}
+                  type="submit"
                   disabled={isSubmitting}
                   className="group/btn relative w-full bg-gradient-to-r from-gray-900 to-gray-800 text-white font-bold py-4 sm:py-5 rounded-xl shadow-2xl transition-all duration-500 flex items-center justify-center gap-3 overflow-hidden hover:shadow-amber-400/50 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
@@ -370,7 +370,7 @@ export default function ContactSection() {
                     </>
                   )}
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
