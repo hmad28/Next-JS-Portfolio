@@ -1,22 +1,22 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
+import type { NextConfig } from "next";
 
+const nextConfig: NextConfig = {
   images: {
-    domains: ["localhost"],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "portfolio-hmd-backend.free.nf",
+        hostname: "portfolio-hmd-.free.nf",
         pathname: "/storage/**",
       },
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
-    unoptimized: true, // Tambahkan ini untuk development
+    unoptimized: true,
   },
+  // Hapus eslint config dari sini
+  // Pindahkan ke .eslintrc.json atau eslint.config.js
 };
 
 export default nextConfig;

@@ -44,15 +44,15 @@ export default function ContactSection() {
     {
       icon: <Mail className="w-5 h-5" />,
       title: "Email",
-      value: "hello@example.com",
-      link: "mailto:hello@example.com",
+      value: "email1.hammad@gmail.com",
+      link: "mailto:email1.hammad@gmail.com",
       delay: 0,
     },
     {
       icon: <Phone className="w-5 h-5" />,
       title: "Phone",
-      value: "+62 812 3456 7890",
-      link: "tel:+6281234567890",
+      value: "+62 896 9612 7555",
+      link: "tel:+6289696127555",
       delay: 0.1,
     },
     {
@@ -65,9 +65,21 @@ export default function ContactSection() {
   ];
 
   const socialLinks = [
-    { icon: <Linkedin className="w-5 h-5" />, link: "#", name: "LinkedIn" },
-    { icon: <Github className="w-5 h-5" />, link: "#", name: "GitHub" },
-    { icon: <Instagram className="w-5 h-5" />, link: "#", name: "Instagram" },
+    {
+      icon: <Linkedin className="w-5 h-5" />,
+      link: "https://www.linkedin.com/in/hmatt28/",
+      name: "LinkedIn",
+    },
+    {
+      icon: <Github className="w-5 h-5" />,
+      link: "https://github.com/hmad28",
+      name: "GitHub",
+    },
+    {
+      icon: <Instagram className="w-5 h-5" />,
+      link: "https://www.instagram.com/matt.hmd28/",
+      name: "Instagram",
+    },
   ];
 
   return (
@@ -288,7 +300,7 @@ export default function ContactSection() {
                       onBlur={() => setFocusedInput(null)}
                       required
                       className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-xl border-2 border-gray-200 focus:border-transparent focus:outline-none transition-all duration-300 bg-gray-50 focus:bg-white text-gray-900 font-medium text-sm sm:text-base"
-                      placeholder="John Doe"
+                      placeholder="Your Name"
                     />
                     {focusedInput === "name" && (
                       <div className="absolute inset-0 rounded-xl border-2 border-amber-400 animate-pulse pointer-events-none"></div>
@@ -311,7 +323,7 @@ export default function ContactSection() {
                       onBlur={() => setFocusedInput(null)}
                       required
                       className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-xl border-2 border-gray-200 focus:border-transparent focus:outline-none transition-all duration-300 bg-gray-50 focus:bg-white text-gray-900 font-medium text-sm sm:text-base"
-                      placeholder="john@example.com"
+                      placeholder="Your Email"
                     />
                     {focusedInput === "email" && (
                       <div className="absolute inset-0 rounded-xl border-2 border-amber-400 animate-pulse pointer-events-none"></div>
