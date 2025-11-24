@@ -1,4 +1,7 @@
-"use client"
+// "use client"
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 import React from "react";
 import styles from "./slider_3d.module.css";
@@ -6,12 +9,8 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Avatar from "./Avatar";
 import AvatarNoBG from "./Avatar-nobg";
-import dynamic from "next/dynamic";
-
-// const Avatar3D = dynamic(() => import("./Avatar-nobg"), {
-//   ssr: false,
-//   loading: () => <div>Loading...</div>,
-// });
+import Viewer3D from "./Viewer3D";
+// import dynamic from "next/dynamic";
 
 
 export default function Slider3DPage() {
@@ -58,7 +57,7 @@ export default function Slider3DPage() {
             <p>Subscribe to the channel to watch many interesting videos</p>
           </div>
           <div className={styles.model}>
-            <AvatarNoBG />
+            <Viewer3D />
           </div>
         </div>
       </div>
