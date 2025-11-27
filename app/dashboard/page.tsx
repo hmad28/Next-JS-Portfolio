@@ -268,7 +268,7 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-5">
+                  <div className="p-4">
                     <div className="flex items-start justify-between mb-3">
                       <h3 className="font-medium text-gray-900 dark:text-white line-clamp-1 flex-1">
                         {portfolio.title}

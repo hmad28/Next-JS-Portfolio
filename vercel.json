@@ -4,6 +4,11 @@
       "source": "/h-mate",
       "destination": "https://h-mate-frontendv2.vercel.app",
       "permanent": false
+    },
+    {
+      "source": "/sahabat-ilmu",
+      "destination": "https://sahabat-ilmu.vercel.app",
+      "permanent": false
     }
   ]
 }
