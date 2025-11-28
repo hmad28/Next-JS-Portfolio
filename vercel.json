@@ -9,6 +9,11 @@
       "source": "/sahabat-ilmu",
       "destination": "https://sahabat-ilmu.vercel.app",
       "permanent": false
+    },
+    {
+      "source": "/firqatunnajiyyah",
+      "destination": "https://firqatun-najiyyah.vercel.app",
+      "permanent": false
     }
   ]
 }
