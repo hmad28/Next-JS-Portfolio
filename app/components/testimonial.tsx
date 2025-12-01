@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Quote, Linkedin, Star } from "lucide-react";
 

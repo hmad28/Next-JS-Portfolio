@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
@@ -17,6 +18,9 @@ const nextConfig: NextConfig = {
   },
   // Hapus eslint config dari sini
   // Pindahkan ke .eslintrc.json atau eslint.config.js
+  experimental: {
+    optimizeCss: true,
+  },
 };
 
 export default nextConfig;

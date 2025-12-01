@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -7,11 +8,13 @@ import Footer from "./components/footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap", // ✅ Tambahkan ini
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap", // ✅ Tambahkan ini
 });
 
 export const metadata: Metadata = {
@@ -70,14 +73,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* ✅ Preload video biar jadi prioritas */}
-        <link
-          rel="preload"
-          as="video"
-          href="/images/logo-hammad-final.mp4"
-          type="video/mp4"
-        />
-        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -116,8 +111,7 @@ export default function RootLayout({
             }),
           }}
         />
-        <script src="https://unpkg.com/aos@next/dist/aos.js" async></script>
-        {/* <script>AOS.init();</script> */}
+
       </body>
     </html>
   );
